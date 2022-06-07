@@ -46,7 +46,7 @@ const StyledLabel = chakra(FormLabel, {
 
 const StyledHeading = chakra(Heading, {
   baseStyle: {
-    fontFamily: "'Merriweather', serif",
+    fontFamily: "'New Yoirk', serif",
     fontWeight: 800,
     textAlign: "center",
   },
@@ -80,8 +80,6 @@ const Signup = ({ csrfToken, session }: Props) => {
         redirect: true,
         callbackUrl: '/'
       });
-
-      alert(JSON.stringify(values, null, 2));
     },
   });
   return (
@@ -91,6 +89,7 @@ const Signup = ({ csrfToken, session }: Props) => {
       border="1px solid #000"
       borderTopWidth={12}
       margin="auto"
+      marginTop="80px"
     >
       <form onSubmit={formik.handleSubmit}>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken || ""} />
