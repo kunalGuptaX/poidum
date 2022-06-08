@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   chakra,
   Flex,
@@ -19,11 +18,15 @@ import { GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
 import { Button, PrimaryButton } from "../Button";
-type Props = {};
+import DisplayPicture from "../DisplayPicture";
+import { Session } from "next-auth";
+type Props = {
+  session: Session;
+};
 
 const NavLinkContainer = chakra(Flex, {
   baseStyle: {
-    fontFamily: "'New Yoirk', serif",
+    fontFamily: "'New York', serif",
     fontWeight: 500,
     fontSize: "20px",
     textTransform: "uppercase",
@@ -69,7 +72,9 @@ const NavbarLinks = ({ children, selected }: NavbarLinks) => {
 };
 
 const Navbar = ({ session }: Props) => {
-  const [isSmallerThan900] = useMediaQuery("(max-width: 850px)");
+  const [isSmallerThan900] = useMediaQuery("(max-width: 850px)", {
+    ssr: true,
+  });
 
   const router = useRouter();
   return (
@@ -89,28 +94,15 @@ const Navbar = ({ session }: Props) => {
             <GrMenu size="2rem" />
           </MenuButton>
           <MenuList>
-            <MenuItem
-              minH="40px"
-              onClick={() =>
-                signOut({
-                  redirect: true,
-                  callbackUrl: "/signin",
-                })
-              }
-            >
+            <MenuItem minH="40px">
               <span>Blog</span>
             </MenuItem>
             {session ? (
               <>
-                <MenuItem minH="2rem">
-                  <WrapItem height="2rem" marginRight="12px">
-                    <Avatar
-                      w="100%"
-                      h="100%"
-                      name="Dan Abrahmov"
-                      src="https://bit.ly/dan-abramov"
-                    />
-                  </WrapItem>
+                <MenuItem onClick={() => router.push("/profile")} minH="2rem">
+                  <Box height="2rem" marginRight="12px">
+                    <DisplayPicture size="sm" />
+                  </Box>
                   <span>Profile</span>
                 </MenuItem>
                 <MenuItem
@@ -160,18 +152,18 @@ const Navbar = ({ session }: Props) => {
             Projects
           </NavbarLinks>
           {session ? (
-            <Box marginLeft="24px">
+            <Flex marginLeft="24px" alignItems="center">
+              <RegisterButton onClick={() => router.push('/post')} marginTop="20px" marginRight="24px">
+                Create Post
+              </RegisterButton>
               <Menu>
                 <MenuButton as={Button} variant="link">
-                  <WrapItem paddingTop="20px">
-                    <Avatar
-                      name="Dan Abrahmov"
-                      src="https://bit.ly/dan-abramov"
-                    />
-                  </WrapItem>
+                  <Box paddingTop="20px">
+                    <DisplayPicture size="md" />
+                  </Box>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem minH="48px">
+                  <MenuItem minH="48px" onClick={() => router.push("/profile")}>
                     <MdAccountCircle
                       size="2rem"
                       style={{ marginRight: "12px" }}
@@ -192,7 +184,7 @@ const Navbar = ({ session }: Props) => {
                   </MenuItem>
                 </MenuList>
               </Menu>
-            </Box>
+            </Flex>
           ) : (
             <Stack
               direction="row"

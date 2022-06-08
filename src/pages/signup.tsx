@@ -5,7 +5,6 @@ import {
   FormHelperText,
   FormLabel,
   Heading,
-  Input,
   Stack,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -15,27 +14,8 @@ import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import { Router, useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { PrimaryButton, Button } from "../components/Button";
+import { Input } from "../components/Input";
 
-const StyledInput = chakra(Input, {
-  baseStyle: {
-    borderColor: "#000",
-    borderRadius: "0",
-    _focusVisible: {
-      borderColor: "#000",
-      borderRadius: "0",
-      borderWidth: "1px",
-      boxShadow: "0 0 0 1px #000",
-    },
-    _hover: {
-      borderColor: "#000",
-      borderWidth: "1.5px",
-    },
-    padding: "18px 12px",
-    height: "auto",
-    fontSize: "16px",
-    color: "#000",
-  },
-});
 
 const StyledLabel = chakra(FormLabel, {
   baseStyle: {
@@ -46,7 +26,7 @@ const StyledLabel = chakra(FormLabel, {
 
 const StyledHeading = chakra(Heading, {
   baseStyle: {
-    fontFamily: "'New Yoirk', serif",
+    fontFamily: "'New York', serif",
     fontWeight: 800,
     textAlign: "center",
   },
@@ -103,7 +83,7 @@ const Signup = ({ csrfToken, session }: Props) => {
             <Stack direction="row" spacing={4}>
               <FormControl>
                 <StyledLabel>First Name</StyledLabel>
-                <StyledInput
+                <Input
                   id="firstName"
                   type="firstName"
                   placeholder="John"
@@ -114,7 +94,7 @@ const Signup = ({ csrfToken, session }: Props) => {
               </FormControl>
               <FormControl>
                 <StyledLabel>Last Name</StyledLabel>
-                <StyledInput
+                <Input
                   id="lastName"
                   type="lastName"
                   placeholder="Wick"
@@ -127,7 +107,7 @@ const Signup = ({ csrfToken, session }: Props) => {
 
             <FormControl>
               <StyledLabel>Email address</StyledLabel>
-              <StyledInput
+              <Input
                 id="email"
                 type="email"
                 placeholder="johnwick@doe.com"
@@ -138,7 +118,7 @@ const Signup = ({ csrfToken, session }: Props) => {
             </FormControl>
             <FormControl>
               <StyledLabel>Password</StyledLabel>
-              <StyledInput
+              <Input
                 id="password"
                 type="password"
                 placeholder="••••••••"

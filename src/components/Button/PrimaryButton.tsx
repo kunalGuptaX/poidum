@@ -23,3 +23,12 @@ export const PrimaryButton = chakra(ChakraButton, {
     },
   },
 });
+
+export const SmallPrimaryButton = chakra(PrimaryButton, {
+  baseStyle: {
+    textTransform: "none",
+    fontSize: "16px",
+    padding: "0 16px",
+    height: "42px",
+  },  
+});

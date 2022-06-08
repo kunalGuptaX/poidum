@@ -7,12 +7,17 @@ import { getSession, SessionProvider } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import App from "next/app";
 import Navbar from "../components/Navbar";
+import { Session } from "next-auth";
 
-function MyApp({ Component, pageProps, session }: AppProps) {
+function MyApp({
+  Component,
+  pageProps,
+  session,
+}: AppProps & { session: Session }) {
   return (
     <ChakraProvider>
-      <Navbar session={session} />
       <SessionProvider session={pageProps.session} refetchInterval={0}>
+        <Navbar session={session} />
         <Component {...pageProps} />
       </SessionProvider>
     </ChakraProvider>

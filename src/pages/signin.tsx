@@ -5,7 +5,6 @@ import {
   FormHelperText,
   FormLabel,
   Heading,
-  Input,
   Stack,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -16,27 +15,7 @@ import axios from "axios";
 import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
-
-const StyledInput = chakra(Input, {
-  baseStyle: {
-    borderColor: "#000",
-    borderRadius: "0",
-    _focusVisible: {
-      borderColor: "#000",
-      borderRadius: "0",
-      borderWidth: "1px",
-      boxShadow: "0 0 0 1px #000",
-    },
-    _hover: {
-      borderColor: "#000",
-      borderWidth: "1.5px",
-    },
-    padding: "18px 12px",
-    height: "auto",
-    fontSize: "16px",
-    color: "#000",
-  },
-});
+import { Input } from "../components/Input";
 
 const StyledLabel = chakra(FormLabel, {
   baseStyle: {
@@ -47,7 +26,7 @@ const StyledLabel = chakra(FormLabel, {
 
 const StyledHeading = chakra(Heading, {
   baseStyle: {
-    fontFamily: "'New Yoirk', serif",
+    fontFamily: "'New York', serif",
     fontWeight: 800,
     textAlign: "center",
   },
@@ -101,7 +80,7 @@ const Signin = ({ csrfToken, session }: Props) => {
             <StyledHeading>Sign in</StyledHeading>
             <FormControl>
               <StyledLabel>Email address</StyledLabel>
-              <StyledInput
+              <Input
                 id="email"
                 type="email"
                 placeholder="johnwick@doe.com"
@@ -112,7 +91,7 @@ const Signin = ({ csrfToken, session }: Props) => {
             </FormControl>
             <FormControl>
               <StyledLabel>Password</StyledLabel>
-              <StyledInput
+              <Input
                 id="password"
                 type="password"
                 placeholder="••••••••"
