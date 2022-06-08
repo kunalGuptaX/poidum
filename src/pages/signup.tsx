@@ -78,86 +78,92 @@ const Signup = ({ csrfToken, session }: Props) => {
         ...values,
         newUser: true,
         redirect: true,
-        callbackUrl: '/'
+        callbackUrl: "/",
       });
     },
   });
   return (
-    <Box
-      maxWidth={640}
-      padding="62px 50px"
-      border="1px solid #000"
-      borderTopWidth={12}
-      margin="auto"
-      marginTop="80px"
-    >
-      <form onSubmit={formik.handleSubmit}>
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken || ""} />
-        <Stack spacing={3}>
-          <StyledHeading>Create account</StyledHeading>
-          <Stack direction="row" spacing={4}>
+    <Box padding="0 24px" width="100%">
+      <Box
+        maxWidth={640}
+        padding="62px 50px"
+        border="1px solid #000"
+        borderTopWidth={12}
+        margin="auto"
+        marginTop="80px"
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <input
+            name="csrfToken"
+            type="hidden"
+            defaultValue={csrfToken || ""}
+          />
+          <Stack spacing={3}>
+            <StyledHeading>Create account</StyledHeading>
+            <Stack direction="row" spacing={4}>
+              <FormControl>
+                <StyledLabel>First Name</StyledLabel>
+                <StyledInput
+                  id="firstName"
+                  type="firstName"
+                  placeholder="John"
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                />
+                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+              </FormControl>
+              <FormControl>
+                <StyledLabel>Last Name</StyledLabel>
+                <StyledInput
+                  id="lastName"
+                  type="lastName"
+                  placeholder="Wick"
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                />
+                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+              </FormControl>
+            </Stack>
+
             <FormControl>
-              <StyledLabel>First Name</StyledLabel>
+              <StyledLabel>Email address</StyledLabel>
               <StyledInput
-                id="firstName"
-                type="firstName"
-                placeholder="John"
-                value={formik.values.firstName}
+                id="email"
+                type="email"
+                placeholder="johnwick@doe.com"
+                value={formik.values.email}
                 onChange={formik.handleChange}
               />
               {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
             <FormControl>
-              <StyledLabel>Last Name</StyledLabel>
+              <StyledLabel>Password</StyledLabel>
               <StyledInput
-                id="lastName"
-                type="lastName"
-                placeholder="Wick"
-                value={formik.values.lastName}
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={formik.values.password}
                 onChange={formik.handleChange}
               />
               {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
             </FormControl>
           </Stack>
-
-          <FormControl>
-            <StyledLabel>Email address</StyledLabel>
-            <StyledInput
-              id="email"
-              type="email"
-              placeholder="johnwick@doe.com"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-          </FormControl>
-          <FormControl>
-            <StyledLabel>Password</StyledLabel>
-            <StyledInput
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-          </FormControl>
-        </Stack>
-        <Box
-          marginTop={6}
-          alignItems="center"
-          display="flex"
-          justifyContent="space-between"
-        >
-          <span>
-            Already have an account?{" "}
-            <Button onClick={() => router.push("/signin")} variant="link">
-              Sign in
-            </Button>
-          </span>
-          <PrimaryButton type="submit">Sign up</PrimaryButton>
-        </Box>
-      </form>
+          <Box
+            marginTop={6}
+            alignItems="center"
+            display="flex"
+            justifyContent="space-between"
+          >
+            <span>
+              Already have an account?{" "}
+              <Button onClick={() => router.push("/signin")} variant="link">
+                Sign in
+              </Button>
+            </span>
+            <PrimaryButton type="submit">Sign up</PrimaryButton>
+          </Box>
+        </form>
+      </Box>
     </Box>
   );
 };

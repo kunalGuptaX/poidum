@@ -77,62 +77,67 @@ const Signin = ({ csrfToken, session }: Props) => {
         email: values.email,
         password: values.password,
         redirect: true,
-        callbackUrl: '/'
-
+        callbackUrl: "/",
       });
     },
   });
   return (
-    <Box
-      maxWidth={640}
-      padding="62px 50px"
-      border="1px solid #000"
-      borderTopWidth={12}
-      margin="auto"
-      marginTop="80px"
-    >
-      <form onSubmit={formik.handleSubmit}>
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken || ""} />
-        <Stack spacing={3}>
-          <StyledHeading>Sign in</StyledHeading>
-          <FormControl>
-            <StyledLabel>Email address</StyledLabel>
-            <StyledInput
-              id="email"
-              type="email"
-              placeholder="johnwick@doe.com"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-          </FormControl>
-          <FormControl>
-            <StyledLabel>Password</StyledLabel>
-            <StyledInput
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-            {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-          </FormControl>
-        </Stack>
-        <Box
-          marginTop={6}
-          alignItems="center"
-          display="flex"
-          justifyContent="space-between"
-        >
-          <span>
-            New here?{" "}
-            <Button onClick={() => router.push("/signup")} variant="link">
-              Create account
-            </Button>
-          </span>
-          <PrimaryButton type="submit">Sign in</PrimaryButton>
-        </Box>
-      </form>
+    <Box padding="0 24px" width="100%">
+      <Box
+        maxWidth={640}
+        padding="62px 50px"
+        border="1px solid #000"
+        borderTopWidth={12}
+        margin="auto"
+        marginTop="80px"
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <input
+            name="csrfToken"
+            type="hidden"
+            defaultValue={csrfToken || ""}
+          />
+          <Stack spacing={3}>
+            <StyledHeading>Sign in</StyledHeading>
+            <FormControl>
+              <StyledLabel>Email address</StyledLabel>
+              <StyledInput
+                id="email"
+                type="email"
+                placeholder="johnwick@doe.com"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+              />
+              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+            </FormControl>
+            <FormControl>
+              <StyledLabel>Password</StyledLabel>
+              <StyledInput
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+              />
+              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+            </FormControl>
+          </Stack>
+          <Box
+            marginTop={6}
+            alignItems="center"
+            display="flex"
+            justifyContent="space-between"
+          >
+            <span>
+              New here?{" "}
+              <Button onClick={() => router.push("/signup")} variant="link">
+                Create account
+              </Button>
+            </span>
+            <PrimaryButton type="submit">Sign in</PrimaryButton>
+          </Box>
+        </form>
+      </Box>
     </Box>
   );
 };
