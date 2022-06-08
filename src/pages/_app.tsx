@@ -28,10 +28,6 @@ function MyApp({
 MyApp.getInitialProps = async (context: any) => {
   const appProps: any = await App.getInitialProps(context);
   const session = await getSession(context);
-
-  // ----------> returns null
-  console.log(session);
-
   return {
     ...appProps,
     session,

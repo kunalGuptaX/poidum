@@ -6,10 +6,6 @@ const Home: NextPage = () => {
   const { data: session, status } = useSession();
   const loading = status === "loading";
 
-  // useEffect(() => {
-  //   // console.log(status, session);
-  // }, [status, session]);
-
   return <div>{session?.email}</div>;
 };
 

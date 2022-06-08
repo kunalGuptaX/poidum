@@ -10,6 +10,7 @@ import { Button, SmallPrimaryButton } from "../components/Button";
 import DisplayPicture from "../components/DisplayPicture";
 import { LabeledInput } from "../components/Input/LabeledInput";
 import Router from "next/router";
+import { VALID_IMAGE_TYPES } from "../lib/constants";
 
 type Props = {
   session: Session;
@@ -27,7 +28,7 @@ const Profile = ({ session }: Props) => {
   const [uploadedImage, setUploadedImage] = useState<File>();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/png": [".png", ".jpeg", ".jpg"],
+      "image/png": VALID_IMAGE_TYPES,
     },
     maxFiles: 1,
   });
@@ -36,10 +37,8 @@ const Profile = ({ session }: Props) => {
     initialValues: {
       displayPicture: session.displayPicture,
     },
-    onSubmit: async (values) => {
-      if (!uploadedImage) {
-        return;
-      }
+    onSubmit: async () => {
+      if (!uploadedImage) return;
       try {
         const formData = new FormData();
         const imageBuffer = await uploadedImage?.arrayBuffer()!;
@@ -57,7 +56,7 @@ const Profile = ({ session }: Props) => {
             },
           }
         );
-
+        
         Router.reload();
       } catch (Er) {
         console.log(Er);

@@ -1,33 +1,37 @@
 import {
   Box,
-  chakra,
   Divider,
   Editable,
-  EditableInput,
   EditablePreview,
   EditableTextarea,
   Flex,
-  Heading,
-  WrapItem,
 } from "@chakra-ui/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import styled from "styled-components";
 import DisplayPicture from "../components/DisplayPicture";
+import { VALID_IMAGE_TYPES } from "../lib/constants";
 type Props = {
   session: Session;
 };
 
+
+const StyledEditable = styled(Editable)`
+  font-size: 54px;
+  line-height: 100%;
+  font-family: "New York";
+  font-weight: 600;
+  text-align: center;
+`;
+
 const Post = ({ session }: Props) => {
-  console.log(session);
   const [uploadedBanner, setUploadedBanner] = useState<File>();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "image/png": [".png", ".jpeg", ".jpg"],
-    },
+    accept: { "image/png": VALID_IMAGE_TYPES },
     maxFiles: 1,
   });
 
@@ -40,20 +44,13 @@ const Post = ({ session }: Props) => {
   return (
     <Box padding="52px 0">
       <Box maxWidth="858px" width="100%" margin="auto">
-        <Editable
+        <StyledEditable
           defaultValue="A few words about this blog platform, Ghost, and how this site was made"
-          fontSize="54px"
-          lineHeight="100%"
           placeholder="Enter Title here..."
-          fontFamily="'New York', serif"
-          textAlign="center"
-          fontWeight={600}
         >
           <EditablePreview />
           <EditableTextarea rows={3} overflow="hidden" resize="none" />
-          {/* Here is the custom input */}
-          {/* <EditableControls /> */}
-        </Editable>
+        </StyledEditable>
         <Box maxWidth="626px" margin="32px auto" textAlign="center">
           <Editable
             defaultValue="Why Ghost (& Figma) instead of Medium, WordPress or other options?"
@@ -71,8 +68,6 @@ const Post = ({ session }: Props) => {
               overflow="hidden"
               resize="none"
             />
-            {/* Here is the custom input */}
-            {/* <EditableControls /> */}
           </Editable>
         </Box>
       </Box>
