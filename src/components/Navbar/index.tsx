@@ -16,7 +16,6 @@ import { MdAccountCircle, MdLogout } from "react-icons/md";
 import { GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
-// import { Button, PrimaryButton } from "../Button";
 import DisplayPicture from "../DisplayPicture";
 import { Session } from "next-auth";
 import { PrimaryButton, SecondaryButton } from "../Button";
@@ -36,22 +35,6 @@ const NavLinkContainer = chakra(Flex, {
     letterSpacing: "0.12em",
   },
 });
-
-// const SigninButton = chakra(Button, {
-//   baseStyle: {
-//     borderColor: "#000",
-//     borderRadius: "0",
-//   },
-// });
-
-// const RegisterButton = chakra(PrimaryButton, {
-//   baseStyle: {
-//     textTransform: "none",
-//     fontSize: "16px",
-//     padding: "0 16px",
-//     height: "42px",
-//   },
-// });
 
 interface NavbarLinks {
   children: React.ReactNode;
@@ -127,18 +110,18 @@ const Navbar = ({ session }: Props) => {
                 justifyContent="center"
                 margin="20px 24px"
               >
-                <Button
+                <PrimaryButton
                   onClick={() => router.push("/signin")}
                   variant="outline"
                 >
                   Sign in
-                </Button>
-                <PrimaryButton
+                </PrimaryButton>
+                <SecondaryButton
                   onClick={() => router.push("/signup")}
                   variant="outline"
                 >
                   Register
-                </PrimaryButton>
+                </SecondaryButton>
               </Stack>
             )}
           </MenuList>

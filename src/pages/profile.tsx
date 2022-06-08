@@ -1,4 +1,4 @@
-import { Box, chakra, Flex, Heading, Stack } from "@chakra-ui/react";
+import { Box, chakra, Flex, Stack } from "@chakra-ui/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { GetServerSidePropsContext } from "next";
@@ -11,18 +11,12 @@ import DisplayPicture from "../components/DisplayPicture";
 import { LabeledInput } from "../components/Input/LabeledInput";
 import Router from "next/router";
 import { VALID_IMAGE_TYPES } from "../lib/constants";
+import { Heading } from "../components/Heading";
 
 type Props = {
   session: Session;
 };
 
-const StyledHeading = chakra(Heading, {
-  baseStyle: {
-    fontFamily: "'New York', serif",
-    fontWeight: 800,
-    textAlign: "center",
-  },
-});
 
 const Profile = ({ session }: Props) => {
   const [uploadedImage, setUploadedImage] = useState<File>();
@@ -97,7 +91,7 @@ const Profile = ({ session }: Props) => {
     <Box padding="24px 20px">
       <Box maxWidth={700} margin="auto">
         <Stack spacing={6}>
-          <StyledHeading>My Profile</StyledHeading>
+          <Heading>My Profile</Heading>
           <Stack direction="row" spacing={10}>
             <form onSubmit={formikPicture.handleSubmit}>
               <Flex

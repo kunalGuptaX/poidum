@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   chakra,
-  Heading,
   Stack,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -12,15 +11,8 @@ import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import {  useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { PrimaryButton } from "../components/Button";
+import { Heading } from "../components/Heading";
 import { LabeledInput } from "../components/Input/LabeledInput";
-
-const StyledHeading = chakra(Heading, {
-  baseStyle: {
-    fontFamily: "'New York', serif",
-    fontWeight: 800,
-    textAlign: "center",
-  },
-});
 
 type Props = {
   csrfToken: string | null;
@@ -69,7 +61,7 @@ const Signup = ({ csrfToken, session }: Props) => {
             defaultValue={csrfToken || ""}
           />
           <Stack spacing={3}>
-            <StyledHeading>Create account</StyledHeading>
+            <Heading>Create account</Heading>
             <Stack direction="row" spacing={4}>
               <LabeledInput
                 label="First Name"

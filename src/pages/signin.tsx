@@ -1,4 +1,4 @@
-import { Box, Button, chakra, Heading, Stack } from "@chakra-ui/react";
+import { Box, Button, chakra, Stack } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -7,14 +7,7 @@ import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { LabeledInput } from "../components/Input/LabeledInput";
-
-const StyledHeading = chakra(Heading, {
-  baseStyle: {
-    fontFamily: "'New York', serif",
-    fontWeight: 800,
-    textAlign: "center",
-  },
-});
+import { Heading } from "../components/Heading";
 
 type Props = {
   csrfToken: string | null;
@@ -61,7 +54,7 @@ const Signin = ({ csrfToken, session }: Props) => {
             defaultValue={csrfToken || ""}
           />
           <Stack spacing={3}>
-            <StyledHeading>Sign in</StyledHeading>
+            <Heading>Sign in</Heading>
             <LabeledInput
               label="Email address"
               id="email"
