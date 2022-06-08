@@ -1,28 +1,12 @@
-import {
-  Box,
-  chakra,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Heading,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Button, chakra, Heading, Stack } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { PrimaryButton, Button } from "../components/Button";
-import axios from "axios";
+import { PrimaryButton } from "../components/Button";
 import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
-import { Input } from "../components/Input";
-
-const StyledLabel = chakra(FormLabel, {
-  baseStyle: {
-    fontSize: "16px",
-    fontWeight: 500,
-  },
-});
+import { LabeledInput } from "../components/Input/LabeledInput";
 
 const StyledHeading = chakra(Heading, {
   baseStyle: {
@@ -78,28 +62,22 @@ const Signin = ({ csrfToken, session }: Props) => {
           />
           <Stack spacing={3}>
             <StyledHeading>Sign in</StyledHeading>
-            <FormControl>
-              <StyledLabel>Email address</StyledLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="johnwick@doe.com"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-            </FormControl>
-            <FormControl>
-              <StyledLabel>Password</StyledLabel>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              />
-              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-            </FormControl>
+            <LabeledInput
+              label="Email address"
+              id="email"
+              type="email"
+              placeholder="johnwick@doe.com"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
+            <LabeledInput
+              label="Password"
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
           </Stack>
           <Box
             marginTop={6}

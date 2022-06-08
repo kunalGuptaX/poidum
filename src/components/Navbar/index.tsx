@@ -1,14 +1,13 @@
 import {
   Box,
+  Button,
   chakra,
   Flex,
-  Image,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Stack,
-  WrapItem,
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -17,9 +16,10 @@ import { MdAccountCircle, MdLogout } from "react-icons/md";
 import { GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
-import { Button, PrimaryButton } from "../Button";
+// import { Button, PrimaryButton } from "../Button";
 import DisplayPicture from "../DisplayPicture";
 import { Session } from "next-auth";
+import { PrimaryButton, SecondaryButton } from "../Button";
 type Props = {
   session: Session;
 };
@@ -37,21 +37,21 @@ const NavLinkContainer = chakra(Flex, {
   },
 });
 
-const SigninButton = chakra(Button, {
-  baseStyle: {
-    borderColor: "#000",
-    borderRadius: "0",
-  },
-});
+// const SigninButton = chakra(Button, {
+//   baseStyle: {
+//     borderColor: "#000",
+//     borderRadius: "0",
+//   },
+// });
 
-const RegisterButton = chakra(PrimaryButton, {
-  baseStyle: {
-    textTransform: "none",
-    fontSize: "16px",
-    padding: "0 16px",
-    height: "42px",
-  },
-});
+// const RegisterButton = chakra(PrimaryButton, {
+//   baseStyle: {
+//     textTransform: "none",
+//     fontSize: "16px",
+//     padding: "0 16px",
+//     height: "42px",
+//   },
+// });
 
 interface NavbarLinks {
   children: React.ReactNode;
@@ -127,18 +127,18 @@ const Navbar = ({ session }: Props) => {
                 justifyContent="center"
                 margin="20px 24px"
               >
-                <SigninButton
+                <Button
                   onClick={() => router.push("/signin")}
                   variant="outline"
                 >
                   Sign in
-                </SigninButton>
-                <RegisterButton
+                </Button>
+                <PrimaryButton
                   onClick={() => router.push("/signup")}
                   variant="outline"
                 >
                   Register
-                </RegisterButton>
+                </PrimaryButton>
               </Stack>
             )}
           </MenuList>
@@ -153,9 +153,13 @@ const Navbar = ({ session }: Props) => {
           </NavbarLinks>
           {session ? (
             <Flex marginLeft="24px" alignItems="center">
-              <RegisterButton onClick={() => router.push('/post')} marginTop="20px" marginRight="24px">
+              <PrimaryButton
+                onClick={() => router.push("/post")}
+                marginTop="20px"
+                marginRight="24px"
+              >
                 Create Post
-              </RegisterButton>
+              </PrimaryButton>
               <Menu>
                 <MenuButton as={Button} variant="link">
                   <Box paddingTop="20px">
@@ -194,18 +198,18 @@ const Navbar = ({ session }: Props) => {
               justifyContent="center"
               marginLeft="24px"
             >
-              <SigninButton
+              <PrimaryButton
                 onClick={() => router.push("/signin")}
                 variant="outline"
               >
                 Sign in
-              </SigninButton>
-              <RegisterButton
+              </PrimaryButton>
+              <SecondaryButton
                 onClick={() => router.push("/signup")}
                 variant="outline"
               >
                 Register
-              </RegisterButton>
+              </SecondaryButton>
             </Stack>
           )}
         </Flex>

@@ -6,7 +6,7 @@ import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Button, SmallPrimaryButton } from "../components/Button";
+import { PrimaryButton, SecondaryButton } from "../components/Button";
 import DisplayPicture from "../components/DisplayPicture";
 import { LabeledInput } from "../components/Input/LabeledInput";
 import Router from "next/router";
@@ -115,9 +115,9 @@ const Profile = ({ session }: Props) => {
                   <input {...getInputProps()} />
                   <DisplayPicture size="2xl" override={uploadedImage as File} />
                 </Box>
-                <SmallPrimaryButton disabled={!uploadedImage} type="submit">
+                <PrimaryButton disabled={!uploadedImage} type="submit">
                   Update
-                </SmallPrimaryButton>
+                </PrimaryButton>
               </Flex>
             </form>
             <form onSubmit={formikProfile.handleSubmit}>
@@ -144,9 +144,9 @@ const Profile = ({ session }: Props) => {
                   /**@ts-ignore */
                   disabled
                 />
-                <SmallPrimaryButton type="submit" variant="outline">
+                <PrimaryButton type="submit" variant="outline">
                   Update
-                </SmallPrimaryButton>
+                </PrimaryButton>
               </Stack>
             </form>
           </Stack>

@@ -1,9 +1,7 @@
 import {
   Box,
+  Button,
   chakra,
-  FormControl,
-  FormHelperText,
-  FormLabel,
   Heading,
   Stack,
 } from "@chakra-ui/react";
@@ -11,18 +9,10 @@ import { useFormik } from "formik";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { getCsrfToken, getSession, signIn } from "next-auth/react";
-import { Router, useRouter } from "next/router";
+import {  useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { PrimaryButton, Button } from "../components/Button";
-import { Input } from "../components/Input";
-
-
-const StyledLabel = chakra(FormLabel, {
-  baseStyle: {
-    fontSize: "16px",
-    fontWeight: 500,
-  },
-});
+import { PrimaryButton } from "../components/Button";
+import { LabeledInput } from "../components/Input/LabeledInput";
 
 const StyledHeading = chakra(Heading, {
   baseStyle: {
@@ -81,52 +71,39 @@ const Signup = ({ csrfToken, session }: Props) => {
           <Stack spacing={3}>
             <StyledHeading>Create account</StyledHeading>
             <Stack direction="row" spacing={4}>
-              <FormControl>
-                <StyledLabel>First Name</StyledLabel>
-                <Input
-                  id="firstName"
-                  type="firstName"
-                  placeholder="John"
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                />
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-              </FormControl>
-              <FormControl>
-                <StyledLabel>Last Name</StyledLabel>
-                <Input
-                  id="lastName"
-                  type="lastName"
-                  placeholder="Wick"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                />
-                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-              </FormControl>
+              <LabeledInput
+                label="First Name"
+                id="firstName"
+                type="firstName"
+                placeholder="John"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+              />
+              <LabeledInput
+                label="Last Name"
+                id="lastName"
+                type="lastName"
+                placeholder="Wick"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+              />
             </Stack>
-
-            <FormControl>
-              <StyledLabel>Email address</StyledLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="johnwick@doe.com"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-            </FormControl>
-            <FormControl>
-              <StyledLabel>Password</StyledLabel>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              />
-              {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-            </FormControl>
+            <LabeledInput
+              label="Email address"
+              id="email"
+              type="email"
+              placeholder="johnwick@doe.com"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
+            <LabeledInput
+              label="Password"
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
           </Stack>
           <Box
             marginTop={6}
