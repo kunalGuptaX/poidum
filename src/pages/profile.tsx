@@ -1,4 +1,4 @@
-import { Box, chakra, Flex, Heading, Stack, WrapItem } from "@chakra-ui/react";
+import { Box, chakra, Flex, Heading, Stack } from "@chakra-ui/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { GetServerSidePropsContext } from "next";
@@ -8,8 +8,8 @@ import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button, SmallPrimaryButton } from "../components/Button";
 import DisplayPicture from "../components/DisplayPicture";
-import { Input } from "../components/Input";
 import { LabeledInput } from "../components/Input/LabeledInput";
+import Router from "next/router";
 
 type Props = {
   session: Session;
@@ -25,12 +25,6 @@ const StyledHeading = chakra(Heading, {
 
 const Profile = ({ session }: Props) => {
   const [uploadedImage, setUploadedImage] = useState<File>();
-
-  const reloadSession = () => {
-    const event = new Event("visibilitychange");
-    document.dispatchEvent(event);
-  };
-
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/png": [".png", ".jpeg", ".jpg"],
@@ -52,12 +46,7 @@ const Profile = ({ session }: Props) => {
         const imageBlob = new Blob([new Uint8Array(imageBuffer)], {
           type: uploadedImage?.type,
         });
-        // Update the formData object
         formData.append("image", imageBlob);
-
-        // Request made to the backend api
-        // Send formData object
-        //   axios.post("api/uploadfile", formData);
 
         const response = await axios.post(
           "http://localhost:4000/api/users/update/displayPicture",
@@ -68,6 +57,8 @@ const Profile = ({ session }: Props) => {
             },
           }
         );
+
+        Router.reload();
       } catch (Er) {
         console.log(Er);
       }
@@ -93,7 +84,7 @@ const Profile = ({ session }: Props) => {
           },
         }
       );
-      console.log(response)
+      Router.reload();
     },
   });
 
