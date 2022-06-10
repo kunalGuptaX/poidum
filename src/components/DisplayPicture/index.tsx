@@ -9,10 +9,11 @@ import React from "react";
 const DisplayPicture = ({
   size,
   override,
-}: AvatarProps & { override?: File }) => {
+  overrideUrl,
+}: AvatarProps & { override?: File; overrideUrl: string }) => {
   const { data, status } = useSession();
 
-  if (status === "loading" || !data) {
+  if (!overrideUrl && (status === "loading" || !data)) {
     return null;
   }
 
@@ -20,14 +21,14 @@ const DisplayPicture = ({
     <WrapItem>
       <ChakraAvatar
         size={size || "2xl"}
-        {...(data.displayPicture
+        {...(data?.displayPicture || overrideUrl
           ? {
               src: override
                 ? URL.createObjectURL(override)
-                : (data.displayPicture as string),
+                : overrideUrl || (data?.displayPicture as string),
             }
           : {
-              name: `${data.firstName} ${data.lastName}`,
+              name: `${data?.firstName} ${data?.lastName}`,
               src: override
                 ? URL.createObjectURL(override)
                 : "https://bit.ly/sage-adebayo",

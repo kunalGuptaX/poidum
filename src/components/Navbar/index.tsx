@@ -12,7 +12,7 @@ import {
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import React from "react";
-import { MdAccountCircle, MdLogout } from "react-icons/md";
+import { MdAccountCircle, MdArticle, MdLogout } from "react-icons/md";
 import { GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
@@ -156,6 +156,13 @@ const Navbar = ({ session }: Props) => {
                       style={{ marginRight: "12px" }}
                     />
                     <span>Profile</span>
+                  </MenuItem>
+                  <MenuItem minH="48px" onClick={() => router.push("/myPosts")}>
+                    <MdArticle
+                      size="2rem"
+                      style={{ marginRight: "12px" }}
+                    />
+                    <span>My Posts</span>
                   </MenuItem>
                   <MenuItem
                     minH="40px"

@@ -2,8 +2,11 @@ import { Heading as ChakraHeading } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-export const Heading = styled(ChakraHeading)<{ size?: "sm" | "md" | "lg" }>`
-  ${({ size }) => {
+export const Heading = styled(ChakraHeading)<{
+  size?: "sm" | "md" | "lg";
+  textAlign?: "left" | "center" | "right";
+}>`
+  ${({ size, textAlign }) => {
     switch (size) {
       case "sm":
         return css``;
@@ -14,7 +17,7 @@ export const Heading = styled(ChakraHeading)<{ size?: "sm" | "md" | "lg" }>`
         return css`
           font-family: "New York", serif;
           font-weight: 800;
-          text-align: center;
+          text-align: ${textAlign || "center"};
         `;
     }
   }}

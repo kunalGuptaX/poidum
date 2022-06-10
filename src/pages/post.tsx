@@ -86,11 +86,12 @@ const Post = ({ session }: Props) => {
     onSubmit: async (values) => {
       try {
         if (editorState.getCurrentContent().getPlainText("\u0001")?.length) {
-          const res = await axios.post("/api/posts/new", {
+          const res = await axios.post("/api/posts/newPost", {
             title: values.title,
             subTitle: values.subTitle,
             body: editorState.getCurrentContent().getPlainText("\u0001"),
           });
+          console.log(res)
         }
       } catch (er) {
         console.log(er);
