@@ -103,7 +103,7 @@ export const nextAuthOptions = (
           `${process.env.SERVER_URL}/api/users/currentuser`,
           {
             headers: {
-              Authorization: `Bearer ${token.accessToken}`,
+              authorization: `Bearer ${token.accessToken}`,
             },
           }
         );

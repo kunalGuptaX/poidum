@@ -15,12 +15,17 @@ function MyApp({
   session,
 }: AppProps & { session: Session }) {
   return (
-    <ChakraProvider>
-      <SessionProvider session={pageProps.session} refetchInterval={0}>
-        <Navbar session={session} />
-        <Component {...pageProps} />
-      </SessionProvider>
-    </ChakraProvider>
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+      </Head>
+      <ChakraProvider>
+        <SessionProvider session={pageProps.session} refetchInterval={0}>
+          <Navbar session={session} />
+          <Component {...pageProps} />
+        </SessionProvider>
+      </ChakraProvider>
+    </>
   );
 }
 
