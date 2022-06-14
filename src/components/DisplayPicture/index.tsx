@@ -10,7 +10,7 @@ const DisplayPicture = ({
   size,
   override,
   overrideUrl,
-}: AvatarProps & { override?: File; overrideUrl: string }) => {
+}: AvatarProps & { override?: File; overrideUrl?: string }) => {
   const { data, status } = useSession();
 
   if (!overrideUrl && (status === "loading" || !data)) {

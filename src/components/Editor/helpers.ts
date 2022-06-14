@@ -1,11 +1,20 @@
-import { EditorState } from "draft-js";
+import {
+  DraftHandleValue,
+  EditorState,
+  getDefaultKeyBinding,
+  KeyBindingUtil,
+  RichUtils,
+} from "draft-js";
 // @ts-ignore
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
 export const DRAFT_EDITOR_CLASSNAME = "DraftEditor-root";
 
 export const getDocumentSelectionPosition: () => DOMRect | null = () => {
-  if (typeof document !== "undefined") {
+  if (
+    typeof document !== "undefined" &&
+    document.getSelection()?.rangeCount! >= 1
+  ) {
     return (
       document.getSelection()?.getRangeAt(0).getBoundingClientRect() || null
     );
@@ -65,3 +74,62 @@ export const getEditorSelectionTopPosition: (
   }
   return null;
 };
+
+export const mapKeyCodeToInlineStyle = (keyCode: number) => {
+  switch (keyCode) {
+    case 66:
+      return "BOLD";
+    case 73:
+      return "ITALIC";
+    case 85:
+      return "UNDERLINE";
+    default:
+      return null;
+  }
+};
+
+export const keyBindingsFn = (e: React.KeyboardEvent): string | null => {
+  if (!KeyBindingUtil.hasCommandModifier(e)) {
+    return getDefaultKeyBinding(e);
+  }
+
+  let value;
+
+  if (typeof navigator !== "undefined") {
+    const isMac = navigator.userAgent.includes("Mac");
+    if ((isMac && e.metaKey) || (!isMac && e.ctrlKey)) {
+      value = mapKeyCodeToInlineStyle(e.keyCode);
+    }
+  }
+
+  return value || getDefaultKeyBinding(e);
+};
+
+export const handleKeyCommands = (
+  command: string,
+  editorState: EditorState,
+  changeState: (editorState: EditorState) => void
+): DraftHandleValue => {
+  switch (command) {
+    case "BOLD":
+      changeState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+      return "handled";
+    case "ITALIC":
+      changeState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+      return "handled";
+    case "UNDERLINE":
+      changeState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+      return "handled";
+    default:
+      return "not-handled";
+  }
+};
+
+export const getBlockType = (editorState: EditorState) =>
+  editorState
+    .getCurrentContent()
+    .getBlockForKey(getEditorSelectionState(editorState).getStartKey())
+    .getType();
+
+export const getInlineStyleTypes = (editorState: EditorState): string[] =>
+  editorState.getCurrentInlineStyle().toArray();

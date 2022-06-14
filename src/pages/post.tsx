@@ -1,4 +1,3 @@
-import "draft-js/dist/Draft.css";
 import {
   Box,
   Divider,
@@ -6,7 +5,6 @@ import {
   EditablePreview,
   EditableTextarea,
   Flex,
-  IconButton,
 } from "@chakra-ui/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
@@ -16,18 +14,12 @@ import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
 import DisplayPicture from "../components/DisplayPicture";
 import { VALID_IMAGE_TYPES } from "../lib/constants";
-import { Editor, EditorState, convertFromRaw, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { useFormik } from "formik";
 import axios from "axios";
 import { PrimaryButton } from "../components/Button";
-import {
-  AiOutlineBold,
-  AiOutlineItalic,
-  AiOutlineUnderline,
-} from "react-icons/ai";
-import { getEditorSelectionTopPosition } from "../lib/editor/helpers/selection";
 import { dateRightNow } from "../lib/common/helpers/datetime";
+import Editor from "../components/Editor";
 
 type Props = {
   session: Session;
@@ -41,39 +33,14 @@ const StyledEditable = styled(Editable)`
   text-align: center;
 `;
 
-const emptyContentState = convertFromRaw({
-  entityMap: {},
-  blocks: [
-    {
-      text: "",
-      key: "foo",
-      type: "unstyled",
-      entityRanges: [],
-      depth: 0,
-      inlineStyleRanges: [],
-    },
-  ],
-});
-
-const TOOLBAR_DEFAULT_LEFT = -150;
-const TOOLBAR_DEFAULT_TOP = -10;
-
 const Post = ({ session }: Props) => {
   const [uploadedBanner, setUploadedBanner] = useState<File>();
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(emptyContentState)
-  );
-  const [cursorPos, setCursorPos] = useState<any>({
-    top: TOOLBAR_DEFAULT_TOP,
-    left: TOOLBAR_DEFAULT_LEFT,
-  });
-
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: { "image/png": VALID_IMAGE_TYPES },
     maxFiles: 1,
   });
-
-  const editorRef = useRef<Editor>(null);
+  const [editorValue, setEditorValue] =
+    useState<Draft.DraftModel.Encoding.RawDraftContentState>();
 
   const formik = useFormik({
     initialValues: {
@@ -85,31 +52,19 @@ const Post = ({ session }: Props) => {
     },
     onSubmit: async (values) => {
       try {
-        if (editorState.getCurrentContent().getPlainText("\u0001")?.length) {
+        if (editorValue) {
           const res = await axios.post("/api/posts/newPost", {
             title: values.title,
             subTitle: values.subTitle,
-            body: editorState.getCurrentContent().getPlainText("\u0001"),
+            body: editorValue,
           });
-          console.log(res)
+          console.log(res);
         }
       } catch (er) {
         console.log(er);
       }
     },
   });
-
-
-  useEffect(() => {
-    const editorSelectionTopPosition =
-      getEditorSelectionTopPosition(editorState);
-    if (editorSelectionTopPosition !== null) {
-      setCursorPos({
-        top: editorSelectionTopPosition + TOOLBAR_DEFAULT_TOP,
-        left: TOOLBAR_DEFAULT_LEFT,
-      });
-    }
-  }, [editorState]);
 
   useEffect(() => {
     if (acceptedFiles?.[0]) {
@@ -215,62 +170,12 @@ const Post = ({ session }: Props) => {
             position="relative"
           >
             <Editor
+              /**@ts-ignore */
               placeholder="Start typing here..."
-              editorState={editorState}
-              onChange={setEditorState}
-              ref={editorRef}
-              // handleKeyCommand={handleKeyCommand}
+              /**@ts-ignore */
+              onChange={(e, value) => setEditorValue(value)}
+              value={editorValue}
             />
-            {cursorPos ? (
-              <div
-                style={{
-                  position: "absolute",
-                  top: cursorPos?.top,
-                  left: cursorPos?.left,
-                  zIndex: 20,
-                }}
-              >
-                <IconButton
-                  aria-label="Search database"
-                  variant="ghost"
-                  icon={<AiOutlineBold />}
-                  borderRadius={0}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    setEditorState(
-                      RichUtils.toggleInlineStyle(editorState, "BOLD")
-                    );
-                    editorRef.current?.focus();
-                  }}
-                />
-                <IconButton
-                  aria-label="Search database"
-                  variant="ghost"
-                  icon={<AiOutlineItalic />}
-                  borderRadius={0}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    setEditorState(
-                      RichUtils.toggleInlineStyle(editorState, "ITALIC")
-                    );
-                    editorRef.current?.focus();
-                  }}
-                />
-                <IconButton
-                  aria-label="Search database"
-                  variant="ghost"
-                  icon={<AiOutlineUnderline />}
-                  borderRadius={0}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    setEditorState(
-                      RichUtils.toggleInlineStyle(editorState, "UNDERLINE")
-                    );
-                    editorRef.current?.focus();
-                  }}
-                />
-              </div>
-            ) : null}
           </Box>
         </Box>
         <PrimaryButton

@@ -1,36 +1,14 @@
-import "draft-js/dist/Draft.css";
-import {
-  Box,
-  Divider,
-  Editable,
-  EditablePreview,
-  EditableTextarea,
-  Flex,
-  IconButton,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex } from "@chakra-ui/react";
 import { GetServerSidePropsContext } from "next";
-import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
-import React, { useEffect, useRef, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import React from "react";
 import styled from "styled-components";
-import { Editor, EditorState, convertFromRaw, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
-import { useFormik } from "formik";
 import axios from "axios";
-import {
-  AiOutlineBold,
-  AiOutlineItalic,
-  AiOutlineUnderline,
-} from "react-icons/ai";
-import { PrimaryButton } from "../../components/Button";
 import { dateRightNow } from "../../lib/common/helpers/datetime";
 import DisplayPicture from "../../components/DisplayPicture";
-import { getEditorSelectionTopPosition } from "../../lib/editor/helpers/selection";
-import { VALID_IMAGE_TYPES } from "../../lib/constants";
 
 type Props = {
-  session: Session;
+  post: any;
 };
 
 const StyledTitle = styled(Box)`
@@ -40,23 +18,6 @@ const StyledTitle = styled(Box)`
   font-weight: 600;
   text-align: center;
 `;
-
-const emptyContentState = convertFromRaw({
-  entityMap: {},
-  blocks: [
-    {
-      text: "",
-      key: "foo",
-      type: "unstyled",
-      entityRanges: [],
-      depth: 0,
-      inlineStyleRanges: [],
-    },
-  ],
-});
-
-const TOOLBAR_DEFAULT_LEFT = -150;
-const TOOLBAR_DEFAULT_TOP = -10;
 
 const Post = ({ post }: Props) => {
   const date = dateRightNow(new Date(post.createdAt));
@@ -142,7 +103,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       `http://localhost:4000/api/posts/get/${context.params.id}`
     );
     post = res.data;
-
   }
 
   return {
