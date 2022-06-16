@@ -3,6 +3,7 @@ import {
   Button,
   chakra,
   Flex,
+  IconButton,
   Menu,
   MenuButton,
   MenuItem,
@@ -19,192 +20,164 @@ import { useMediaQuery } from "@chakra-ui/react";
 import DisplayPicture from "../DisplayPicture";
 import { Session } from "next-auth";
 import { PrimaryButton, SecondaryButton } from "../Button";
+import Image from "next/image";
+import { TbEdit } from "react-icons/tb";
+import Link from "next/link";
 type Props = {
   session: Session;
 };
 
 const NavLinkContainer = chakra(Flex, {
   baseStyle: {
-    fontFamily: "'New York', serif",
-    fontWeight: 500,
-    fontSize: "20px",
-    textTransform: "uppercase",
+    fontFamily: "Noto Sans JP",
+    fontWeight: 400,
+    fontSize: "14px",
     height: "100%",
     alignItems: "center",
-    paddingTop: "20px",
-    letterSpacing: "0.12em",
+    color: "#000",
   },
 });
 
 interface NavbarLinks {
   children: React.ReactNode;
   selected?: boolean;
+  href?: string;
 }
 
-const NavbarLinks = ({ children, selected }: NavbarLinks) => {
+const NavbarLinks = ({ children, selected, href }: NavbarLinks) => {
   return (
     <NavLinkContainer
       height="100%"
       margin="0 15px"
-      borderBottom={selected ? `2px solid #000` : ""}
-      paddingTop={selected ? "22px" : "20px"}
+      textDecoration={selected ? "underline" : "none"}
     >
-      {children}
+      <Link href={href || "/"}>{children}</Link>
     </NavLinkContainer>
   );
 };
 
 const Navbar = ({ session }: Props) => {
-  const [isSmallerThan900] = useMediaQuery("(max-width: 850px)", {
+  const [isSmallerThan728] = useMediaQuery("(max-width: 728px)", {
+    ssr: true,
+  });
+
+  const [isSmallerThan552] = useMediaQuery("(max-width: 552px)", {
     ssr: true,
   });
 
   const router = useRouter();
   return (
-    <Flex
-      height="132px"
-      alignItems="center"
-      justifyContent="space-between"
-      padding="0 60px"
-      boxShadow="0px 1px 0px rgba(0, 0, 0, 0.16)"
+    <Box
+      position="fixed"
+      top="0"
+      width="100%"
+      padding="25px 0"
+      boxShadow="0px 1px 0px rgba(0, 0, 0)"
     >
-      <Flex alignItems="center" fontFamily="Spectral" fontSize={64}>
-        Blog
-      </Flex>
-      {isSmallerThan900 ? (
-        <Menu>
-          <MenuButton as={Button} variant="link">
-            <GrMenu size="2rem" />
-          </MenuButton>
-          <MenuList>
-            <MenuItem minH="40px">
-              <span>Blog</span>
-            </MenuItem>
-            {session ? (
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        maxWidth="1192px"
+        margin={isSmallerThan728 ? "0 24px" : "auto"}
+      >
+        <Flex alignItems="center" fontFamily="Spectral" fontSize={64}>
+          <Image src="/images/PodiumLogo.svg" width="160" height={24.57} />
+        </Flex>
+        <Box height="25px">
+          <Flex height="100%" alignItems="center">
+            {!isSmallerThan728 ? (
               <>
-                <MenuItem onClick={() => router.push("/profile")} minH="2rem">
-                  <Box height="2rem" marginRight="12px">
-                    <DisplayPicture size="sm" />
-                  </Box>
-                  <span>Profile</span>
-                </MenuItem>
-                <MenuItem
-                  minH="40px"
-                  onClick={() =>
-                    signOut({
-                      redirect: true,
-                      callbackUrl: "/signin",
-                    })
-                  }
-                >
-                  <MdLogout size="2rem" style={{ marginRight: "12px" }} />
-                  <span>Sign out</span>
-                </MenuItem>
+                <NavbarLinks selected={router.asPath === "/"}>Blog</NavbarLinks>
+                <NavbarLinks selected={router.asPath === "/about"}>
+                  Membership
+                </NavbarLinks>
+                <NavbarLinks selected={router.asPath === "/links"}>
+                  Write
+                </NavbarLinks>
               </>
+            ) : null}
+            {!isSmallerThan552 ? (
+              <NavbarLinks
+                selected={router.asPath === "/signin"}
+                href="/signin"
+              >
+                Sign in
+              </NavbarLinks>
+            ) : null}
+            {session ? (
+              <Flex marginLeft="24px" alignItems="center">
+                <IconButton
+                  onClick={() => router.push("/post")}
+                  aria-label="New"
+                  variant="ghost"
+                >
+                  <TbEdit size={28} />
+                </IconButton>
+                <Menu>
+                  <MenuButton as={Button} variant="link">
+                    <Box>
+                      <DisplayPicture size="md" />
+                    </Box>
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem
+                      minH="48px"
+                      onClick={() => router.push("/profile")}
+                    >
+                      <MdAccountCircle
+                        size="2rem"
+                        style={{ marginRight: "12px" }}
+                      />
+                      <span>Profile</span>
+                    </MenuItem>
+                    <MenuItem
+                      minH="48px"
+                      onClick={() => router.push("/myPosts")}
+                    >
+                      <MdArticle size="2rem" style={{ marginRight: "12px" }} />
+                      <span>My Posts</span>
+                    </MenuItem>
+                    <MenuItem
+                      minH="40px"
+                      onClick={() =>
+                        signOut({
+                          redirect: true,
+                          callbackUrl: "/signin",
+                        })
+                      }
+                    >
+                      <MdLogout size="2rem" style={{ marginRight: "12px" }} />
+                      <span>Sign out</span>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Flex>
             ) : (
               <Stack
                 direction="row"
-                marginTop="20px"
                 spacing={4}
                 alignItems="center"
                 justifyContent="center"
-                margin="20px 24px"
+                marginLeft="12px"
               >
                 <PrimaryButton
-                  onClick={() => router.push("/signin")}
+                  onClick={() => router.push("/signup")}
                   variant="outline"
                 >
-                  Sign in
+                  Get started
                 </PrimaryButton>
-                <SecondaryButton
+                {/* <SecondaryButton
                   onClick={() => router.push("/signup")}
                   variant="outline"
                 >
                   Register
-                </SecondaryButton>
+                </SecondaryButton> */}
               </Stack>
             )}
-          </MenuList>
-        </Menu>
-      ) : (
-        <Flex height="100%" alignItems="center">
-          <NavbarLinks selected={router.asPath === "/"}>Blog</NavbarLinks>
-          <NavbarLinks selected={router.asPath === "/about"}>About</NavbarLinks>
-          <NavbarLinks selected={router.asPath === "/links"}>Links</NavbarLinks>
-          <NavbarLinks selected={router.asPath === "/projects"}>
-            Projects
-          </NavbarLinks>
-          {session ? (
-            <Flex marginLeft="24px" alignItems="center">
-              <PrimaryButton
-                onClick={() => router.push("/post")}
-                marginTop="20px"
-                marginRight="24px"
-              >
-                Create Post
-              </PrimaryButton>
-              <Menu>
-                <MenuButton as={Button} variant="link">
-                  <Box paddingTop="20px">
-                    <DisplayPicture size="md" />
-                  </Box>
-                </MenuButton>
-                <MenuList>
-                  <MenuItem minH="48px" onClick={() => router.push("/profile")}>
-                    <MdAccountCircle
-                      size="2rem"
-                      style={{ marginRight: "12px" }}
-                    />
-                    <span>Profile</span>
-                  </MenuItem>
-                  <MenuItem minH="48px" onClick={() => router.push("/myPosts")}>
-                    <MdArticle
-                      size="2rem"
-                      style={{ marginRight: "12px" }}
-                    />
-                    <span>My Posts</span>
-                  </MenuItem>
-                  <MenuItem
-                    minH="40px"
-                    onClick={() =>
-                      signOut({
-                        redirect: true,
-                        callbackUrl: "/signin",
-                      })
-                    }
-                  >
-                    <MdLogout size="2rem" style={{ marginRight: "12px" }} />
-                    <span>Sign out</span>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-          ) : (
-            <Stack
-              direction="row"
-              marginTop="20px"
-              spacing={4}
-              alignItems="center"
-              justifyContent="center"
-              marginLeft="24px"
-            >
-              <PrimaryButton
-                onClick={() => router.push("/signin")}
-                variant="outline"
-              >
-                Sign in
-              </PrimaryButton>
-              <SecondaryButton
-                onClick={() => router.push("/signup")}
-                variant="outline"
-              >
-                Register
-              </SecondaryButton>
-            </Stack>
-          )}
-        </Flex>
-      )}
-    </Flex>
+          </Flex>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 

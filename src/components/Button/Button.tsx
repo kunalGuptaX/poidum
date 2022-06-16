@@ -9,7 +9,10 @@ const StyledPrimaryButton = styled(ChakraButton)<{
   border-color: #000;
   border-radius: 0;
   color: white;
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 14px;
+  border-radius: 25px;
+  font-family: 'Noto Sans JP';
   height: auto;
   :hover {
     background-color: #000;
@@ -32,7 +35,7 @@ const StyledPrimaryButton = styled(ChakraButton)<{
       case "md":
       default:
         return css`
-          padding: 12px 20px;
+          padding: 9px 16px 11px;
         `;
     }
   }}

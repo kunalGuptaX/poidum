@@ -111,7 +111,7 @@ const Editor = ({
         }
         keyBindingFn={keyBindingsFn}
       />
-      {cursorPos ? (
+      {cursorPos? (
         <InlineFormattingToolbar
           editorRef={ref}
           left={cursorPos?.left}

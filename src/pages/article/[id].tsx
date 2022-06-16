@@ -83,7 +83,7 @@ const Post = ({ post }: Props) => {
         <Box
           marginTop="56px"
           fontSize="20px"
-          fontFamily="New York"
+          fontFamily="charter"
           position="relative"
         >
           {post.body}

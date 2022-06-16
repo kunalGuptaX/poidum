@@ -18,6 +18,7 @@ function MyApp({
     <>
       <Head>
         <meta charSet="utf-8" />
+        <link rel="stylesheet" href="/stylesheet.css" />
       </Head>
       <ChakraProvider>
         <SessionProvider session={pageProps.session} refetchInterval={0}>

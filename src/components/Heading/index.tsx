@@ -15,7 +15,7 @@ export const Heading = styled(ChakraHeading)<{
       case "md":
       default:
         return css`
-          font-family: "New York", serif;
+          font-family: "charter", serif;
           font-weight: 800;
           text-align: ${textAlign || "center"};
         `;
