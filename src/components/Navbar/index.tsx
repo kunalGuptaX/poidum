@@ -3,6 +3,7 @@ import {
   Button,
   chakra,
   Flex,
+  Heading,
   IconButton,
   Menu,
   MenuButton,
@@ -12,9 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { MdAccountCircle, MdArticle, MdLogout } from "react-icons/md";
-import { GrMenu } from "react-icons/gr";
+import { GrFacebook, GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
 import DisplayPicture from "../DisplayPicture";
@@ -23,6 +24,12 @@ import { PrimaryButton, SecondaryButton } from "../Button";
 import Image from "next/image";
 import { TbEdit } from "react-icons/tb";
 import Link from "next/link";
+import Modal from "../Modal";
+import { FcGoogle } from "react-icons/fc";
+import { AiOutlineMail } from "react-icons/ai";
+import Signup from "../../lib/Authentication/Signup";
+import Signin from "../../lib/Authentication/Signin";
+import { useAuth } from "../../lib/Authentication/AuthProvider";
 type Props = {
   session: Session;
 };
@@ -35,6 +42,7 @@ const NavLinkContainer = chakra(Flex, {
     height: "100%",
     alignItems: "center",
     color: "#000",
+    cursor: "pointer",
   },
 });
 
@@ -57,6 +65,7 @@ const NavbarLinks = ({ children, selected, href }: NavbarLinks) => {
 };
 
 const Navbar = ({ session }: Props) => {
+  const { openSignUpModal, openSignInModal } = useAuth();
   const [isSmallerThan728] = useMediaQuery("(max-width: 728px)", {
     ssr: true,
   });
@@ -97,12 +106,13 @@ const Navbar = ({ session }: Props) => {
               </>
             ) : null}
             {!isSmallerThan552 ? (
-              <NavbarLinks
+              <NavLinkContainer
                 selected={router.asPath === "/signin"}
-                href="/signin"
+                // href="/signin"
+                onClick={() => openSignInModal()}
               >
                 Sign in
-              </NavbarLinks>
+              </NavLinkContainer>
             ) : null}
             {session ? (
               <Flex marginLeft="24px" alignItems="center">
@@ -158,10 +168,11 @@ const Navbar = ({ session }: Props) => {
                 spacing={4}
                 alignItems="center"
                 justifyContent="center"
-                marginLeft="12px"
+                marginLeft="24px"
               >
                 <PrimaryButton
-                  onClick={() => router.push("/signup")}
+                  // onClick={() => router.push("/signup")}
+                  onClick={() => openSignUpModal()}
                   variant="outline"
                 >
                   Get started

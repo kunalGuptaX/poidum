@@ -10,7 +10,7 @@ const StyledPrimaryButton = styled(ChakraButton)<{
   border-radius: 0;
   color: white;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 25px;
   font-family: 'Noto Sans JP';
   height: auto;
@@ -44,20 +44,22 @@ const StyledPrimaryButton = styled(ChakraButton)<{
 const StyledSecondaryButton = styled(ChakraButton)<{
   size?: "sm" | "md" | "lg";
 }>`
-  border-color: #000;
-  background-color: "transparent";
+  border-color: rgb(168, 168, 168);
+  background-color: transparent;
   border-radius: 0;
   color: #000;
-  font-weight: 700;
-  height: auto;
+  border-radius: 0;
+  font-weight: 400;
+  font-size: 13px;
+  border-radius: 25px;
+  font-family: 'Noto Sans JP';
   :hover {
-    border: 1x solid #000;
-    background-color: "transparent";
-    opacity: 0.6;
+    border-color: #000;
+    background-color: transparent;
   }
   :active {
-    border: 1x solid #000;
-    background-color: "transparent";
+    border-color: #000;
+    background-color: transparent;
     opacity: 0.8;
   }
   ${({ size }) => {
@@ -73,7 +75,7 @@ const StyledSecondaryButton = styled(ChakraButton)<{
       case "md":
       default:
         return css`
-          padding: 12px 20px;
+          padding: 9px 16px 11px;
         `;
     }
   }}

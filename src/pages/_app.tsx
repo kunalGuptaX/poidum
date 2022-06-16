@@ -2,12 +2,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ChakraTheme, extendTheme } from "@chakra-ui/react";
 import { getSession, SessionProvider } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import App from "next/app";
 import Navbar from "../components/Navbar";
 import { Session } from "next-auth";
+import { theme } from "../styles/theme";
+import AuthProvider from "../lib/Authentication/AuthProvider";
+import Authentication from "../lib/Authentication/Authentication";
 
 function MyApp({
   Component,
@@ -20,10 +23,13 @@ function MyApp({
         <meta charSet="utf-8" />
         <link rel="stylesheet" href="/stylesheet.css" />
       </Head>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <SessionProvider session={pageProps.session} refetchInterval={0}>
-          <Navbar session={session} />
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Authentication />
+            <Navbar session={session} />
+            <Component {...pageProps} />
+          </AuthProvider>
         </SessionProvider>
       </ChakraProvider>
     </>
