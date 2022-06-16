@@ -8,6 +8,8 @@ import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { LabeledInput } from "../components/Input/LabeledInput";
 import { Heading } from "../components/Heading";
+import Authentication from "../lib/Authentication/Authentication";
+import { useAuth } from "../lib/Authentication/AuthProvider";
 
 type Props = {
   csrfToken: string | null;
@@ -16,80 +18,16 @@ type Props = {
 
 const Signin = ({ csrfToken, session }: Props) => {
   const router = useRouter();
-
+  const { openSignInModal, isModalOpen } = useAuth();
   useEffect(() => {
     if (session?.accessToken) {
       router.push("/");
+    } else if (!isModalOpen) {
+      openSignInModal();
     }
-  }, [session, router]);
+  }, [session, router, openSignInModal, isModalOpen]);
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: async (values) => {
-      const user = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirect: true,
-        callbackUrl: "/",
-      });
-    },
-  });
-  return (
-    <Box padding="0 24px" width="100%">
-      <Box
-        maxWidth={640}
-        padding="62px 50px"
-        border="1px solid #000"
-        borderTopWidth={12}
-        margin="auto"
-        marginTop="80px"
-      >
-        <form onSubmit={formik.handleSubmit}>
-          <input
-            name="csrfToken"
-            type="hidden"
-            defaultValue={csrfToken || ""}
-          />
-          <Stack spacing={3}>
-            <Heading>Sign in</Heading>
-            <LabeledInput
-              label="Email address"
-              id="email"
-              type="email"
-              placeholder="johnwick@doe.com"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-            <LabeledInput
-              label="Password"
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-          </Stack>
-          <Box
-            marginTop={6}
-            alignItems="center"
-            display="flex"
-            justifyContent="space-between"
-          >
-            <span>
-              New here?{" "}
-              <Button onClick={() => router.push("/signup")} variant="link">
-                Create account
-              </Button>
-            </span>
-            <PrimaryButton type="submit">Sign in</PrimaryButton>
-          </Box>
-        </form>
-      </Box>
-    </Box>
-  );
+  return <></>;
 };
 
 export default Signin;

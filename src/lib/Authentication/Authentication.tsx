@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import Modal from "../../components/Modal";
 import { useAuth } from "./AuthProvider";
@@ -6,9 +7,7 @@ import SigninWithEmail from "./SignInWithEmail";
 import Signup from "./Signup";
 import SignUpWithEmail from "./SignUpWithEmail";
 
-type Props = {};
-
-const Authentication = (props: Props) => {
+const Authentication = () => {
   const {
     signInOpen,
     signUpOpen,
@@ -16,6 +15,7 @@ const Authentication = (props: Props) => {
     emailSignInOpen,
     emailSignUpOpen,
   } = useAuth();
+
   if (emailSignInOpen || emailSignUpOpen) {
     return (
       <Modal
@@ -23,7 +23,7 @@ const Authentication = (props: Props) => {
         header={emailSignInOpen ? "Sign in with email" : "Sign up with email"}
         onClose={closeAuthenticationModal}
       >
-        {emailSignInOpen ? <SignUpWithEmail /> : <SignUpWithEmail />}
+        {emailSignInOpen ? <SigninWithEmail /> : <SignUpWithEmail />}
       </Modal>
     );
   }

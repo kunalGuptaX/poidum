@@ -152,7 +152,7 @@ const Navbar = ({ session }: Props) => {
                       onClick={() =>
                         signOut({
                           redirect: true,
-                          callbackUrl: "/signin",
+                          callbackUrl: "/",
                         })
                       }
                     >

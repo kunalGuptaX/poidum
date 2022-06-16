@@ -14,6 +14,7 @@ const AuthContext = React.createContext({
   signInOpen: false,
   emailSignInOpen: false,
   emailSignUpOpen: false,
+  isModalOpen: false
 });
 
 enum AuthTypes {
@@ -57,6 +58,7 @@ const AuthProvider = ({ children }: Props) => {
         signUpOpen: authType === AuthTypes.SIGNUP,
         emailSignInOpen: authType === AuthTypes.EMAIL_SIGNIN,
         emailSignUpOpen: authType === AuthTypes.EMAIL_SIGNUP,
+        isModalOpen: authType !== null,
         closeAuthenticationModal,
       }}
     >
