@@ -11,6 +11,7 @@ import { Session } from "next-auth";
 import { theme } from "../styles/theme";
 import AuthProvider from "../lib/Authentication/AuthProvider";
 import Authentication from "../lib/Authentication/Authentication";
+import AuthenticatedLayout from "../layouts/AuthenticatedLayout";
 
 function MyApp({
   Component,
@@ -27,8 +28,16 @@ function MyApp({
         <SessionProvider session={pageProps.session} refetchInterval={0}>
           <AuthProvider>
             <Authentication />
-            <Navbar session={session} />
-            <Component {...pageProps} />
+            {session?.accessToken ? (
+              <AuthenticatedLayout
+                middleContent={<Component {...pageProps} />}
+              ></AuthenticatedLayout>
+            ) : (
+              <>
+                <Navbar session={session} />
+                <Component {...pageProps} />
+              </>
+            )}
           </AuthProvider>
         </SessionProvider>
       </ChakraProvider>
