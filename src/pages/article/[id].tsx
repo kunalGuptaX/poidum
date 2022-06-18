@@ -6,6 +6,8 @@ import "draft-js/dist/Draft.css";
 import axios from "axios";
 import { dateRightNow } from "../../lib/common/helpers/datetime";
 import DisplayPicture from "../../components/DisplayPicture";
+import { convertToHTML } from "draft-convert";
+import { convertFromRaw, Editor, EditorState } from "draft-js";
 
 type Props = {
   post: any;
@@ -21,6 +23,9 @@ const StyledTitle = styled(Box)`
 
 const Post = ({ post }: Props) => {
   const date = dateRightNow(new Date(post.createdAt));
+  const editorState = EditorState.createWithContent(
+    convertFromRaw(JSON.parse(post.body))
+  );
 
   return (
     <Box padding="52px 0">
@@ -86,7 +91,8 @@ const Post = ({ post }: Props) => {
           fontFamily="charter"
           position="relative"
         >
-          {post.body}
+          <Editor readOnly editorState={editorState} />
+          {convertToHTML(JSON.parse(post.body))}
         </Box>
       </Box>
     </Box>

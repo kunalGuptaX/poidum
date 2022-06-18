@@ -2,6 +2,15 @@ import {
   WrapItem,
   Avatar as ChakraAvatar,
   AvatarProps,
+  Popover,
+  PopoverTrigger,
+  Button,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  chakra,
 } from "@chakra-ui/react";
 import { getSession, useSession } from "next-auth/react";
 import React from "react";
@@ -35,6 +44,22 @@ const DisplayPicture = ({
             })}
       />
     </WrapItem>
+  );
+};
+
+export const DisplayPicturePopover = ({ children, ...props }) => {
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <Button variant="ghost" padding="0" borderRadius="50%">
+          <DisplayPicture {...props} />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent width="fit-content">
+        <PopoverArrow />
+        <PopoverBody padding="0" width="fit-content" overflow="auto" maxHeight="100vh">{children}</PopoverBody>
+      </PopoverContent>
+    </Popover>
   );
 };
 

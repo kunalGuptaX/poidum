@@ -1,4 +1,5 @@
 import { Box, Divider, Flex, IconButton, Stack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const AuthenticatedNavbarItems = ({ direction = "column" }: Props) => {
+  const router = useRouter();
   const commonStyles =
     direction === "row"
       ? {
@@ -73,6 +75,7 @@ const AuthenticatedNavbarItems = ({ direction = "column" }: Props) => {
               colorScheme="blackAlpha"
               size="lg"
               icon={<BiEdit size={24} />}
+              onClick={() => router.push("/new-post")}
             />
           </>
         ) : (

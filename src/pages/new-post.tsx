@@ -2,6 +2,7 @@ import {
   Box,
   Divider,
   Editable,
+  EditableInput,
   EditablePreview,
   EditableTextarea,
   Flex,
@@ -20,6 +21,7 @@ import axios from "axios";
 import { PrimaryButton } from "../components/Button";
 import { dateRightNow } from "../lib/common/helpers/datetime";
 import Editor from "../components/Editor";
+import IsolatedNavbar from "../components/Navbar/IsolatedNavbar";
 
 type Props = {
   session: Session;
@@ -52,12 +54,15 @@ const Post = ({ session }: Props) => {
     },
     onSubmit: async (values) => {
       try {
+        console.log(editorValue);
         if (editorValue) {
-          const res = await axios.post("/api/posts/newPost", {
-            title: values.title,
-            subTitle: values.subTitle,
-            body: editorValue,
-          });
+          const res = await axios
+            .post("/api/posts/newPost", {
+              title: values.title,
+              subTitle: values.subTitle || "test subtitle",
+              body: JSON.stringify(editorValue),
+            })
+            .catch((er) => console.log(er));
           console.log(res);
         }
       } catch (er) {
@@ -73,9 +78,11 @@ const Post = ({ session }: Props) => {
   }, [acceptedFiles]);
 
   return (
-    <Box padding="52px 0">
+    <>
       <form onSubmit={formik.handleSubmit}>
-        <Box maxWidth="858px" width="100%" margin="auto">
+        <IsolatedNavbar session={session} />
+        <Box marginTop="62px" paddingTop="8px">
+          {/* <Box maxWidth="858px" width="100%" margin="auto">
           <StyledEditable
             defaultValue="A few words about this blog platform, Ghost, and how this site was made"
             placeholder="Enter Title here..."
@@ -148,9 +155,34 @@ const Post = ({ session }: Props) => {
             borderColor="#000"
             borderWidth="2px"
           />
-        </Box>
-        <Box maxWidth="640px" margin="auto">
-          <Flex alignItems="center">
+        </Box> */}
+          <Box maxWidth="640px" margin="auto">
+            <Editable placeholder="Title" marginBottom="20px">
+              <EditablePreview fontSize="34px" fontFamily="charter" />
+              <EditableInput
+                border="none"
+                _focusVisible={{
+                  border: "none",
+                }}
+                paddingBottom="0"
+                marginBottom="3px"
+                fontSize="34px"
+                fontFamily="charter"
+                autoFocus
+                id="title"
+                onChange={formik.handleChange}
+                value={formik.values.title}
+              />
+            </Editable>
+            <Editor
+              /**@ts-ignore */
+              placeholder="Start typing here..."
+              id="body"
+              /**@ts-ignore */
+              onChange={(e, value) => setEditorValue(value)}
+              value={editorValue}
+            />
+            {/* <Flex alignItems="center">
             <Box marginRight="16px">
               <DisplayPicture size="md" />
             </Box>
@@ -162,30 +194,26 @@ const Post = ({ session }: Props) => {
               >{`${session?.firstName} ${session.lastName}`}</Box>
               <Box>{dateRightNow()}</Box>
             </Box>
-          </Flex>
-          <Box
+          </Flex> */}
+            {/* <Box
             marginTop="56px"
             fontSize="20px"
             fontFamily="charter"
             position="relative"
           >
-            <Editor
-              /**@ts-ignore */
-              placeholder="Start typing here..."
-              /**@ts-ignore */
-              onChange={(e, value) => setEditorValue(value)}
-              value={editorValue}
-            />
+
+          </Box> */}
           </Box>
-        </Box>
-        <PrimaryButton
+
+          {/* <PrimaryButton
           type="submit"
           style={{ position: "fixed", bottom: "20px", right: "200px" }}
         >
           Submit
-        </PrimaryButton>
+        </PrimaryButton> */}
+        </Box>
       </form>
-    </Box>
+    </>
   );
 };
 

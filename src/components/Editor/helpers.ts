@@ -1,4 +1,5 @@
 import {
+  ContentBlock,
   DraftHandleValue,
   EditorState,
   getDefaultKeyBinding,
@@ -7,6 +8,7 @@ import {
 } from "draft-js";
 // @ts-ignore
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
+import { List } from "immutable";
 
 export const DRAFT_EDITOR_CLASSNAME = "DraftEditor-root";
 
@@ -133,3 +135,105 @@ export const getBlockType = (editorState: EditorState) =>
 
 export const getInlineStyleTypes = (editorState: EditorState): string[] =>
   editorState.getCurrentInlineStyle().toArray();
+
+export const createEmptyTitleBlock = (editorState: EditorState) => {
+  const newBlock = new ContentBlock({
+    key: "title",
+    type: "header-one",
+    text: "",
+    characterList: List(),
+    placeholder: "Title"
+  });
+  let editorContentState = editorState.getCurrentContent();
+  let selectionState = editorState.getSelection();
+
+  var key = selectionState.getAnchorKey();
+  var offset = selectionState.getAnchorOffset();
+  var blockMap = editorContentState.getBlockMap();
+  var blockToSplit = blockMap.get(key);
+
+  var text = blockToSplit.getText();
+  var chars = blockToSplit.getCharacterList();
+
+  var blockAbove = blockToSplit.merge({
+    text: text.slice(0, offset),
+    characterList: chars.slice(0, offset),
+  });
+
+  var blocksBefore = blockMap.toSeq().takeUntil((v) => v === blockToSplit);
+  var blocksAfter = blockMap
+    .toSeq()
+    .skipUntil((v) => v === blockToSplit)
+    .rest();
+  var newBlocks = blocksBefore
+    .concat(
+      [
+        [newBlock.getKey(), newBlock],
+        [blockAbove.getKey(), blockAbove],
+      ],
+      blocksAfter
+    )
+    .toOrderedMap();
+
+  let csn = editorContentState.merge({ blockMap: newBlocks });
+  // const editorContentState = editorState.getCurrentContent();
+  // const contentStateWithBlock = editorContentState
+  //   ?.getBlockMap()
+  //   .set("content", newBlock).toOrderedMap();
+  //   console.log(contentStateWithBlock)
+
+  // const entityKey = contentStateWithBlock.getLastCreatedEntityKey();
+  // const newEditorState = EditorState.create(contentStateWithBlock);
+  return EditorState.createWithContent(csn);
+};
+
+export const createEmptyContentBlock = (editorState: EditorState) => {
+  const newBlock = new ContentBlock({
+    key: "content",
+    type: "unstyled",
+    text: "",
+    characterList: List(),
+    placeholder: "Tell your story"
+  });
+  let editorContentState = editorState.getCurrentContent();
+  let selectionState = editorState.getSelection();
+
+  var key = selectionState.getAnchorKey();
+  var offset = selectionState.getAnchorOffset();
+  var blockMap = editorContentState.getBlockMap();
+  var blockToSplit = blockMap.get(key);
+
+  var text = blockToSplit.getText();
+  var chars = blockToSplit.getCharacterList();
+
+  var blockAbove = blockToSplit.merge({
+    text: text.slice(0, offset),
+    characterList: chars.slice(0, offset),
+  });
+
+  var blocksBefore = blockMap.toSeq().takeUntil((v) => v === blockToSplit);
+  var blocksAfter = blockMap
+    .toSeq()
+    .skipUntil((v) => v === blockToSplit)
+    .rest();
+  var newBlocks = blocksBefore
+    .concat(
+      [
+        [blockAbove.getKey(), blockAbove],
+        [newBlock.getKey(), newBlock],
+      ],
+      blocksAfter
+    )
+    .toOrderedMap();
+
+  let csn = editorContentState.merge({ blockMap: newBlocks });
+  // const editorContentState = editorState.getCurrentContent();
+  // const contentStateWithBlock = editorContentState
+  //   ?.getBlockMap()
+  //   .set("content", newBlock).toOrderedMap();
+  //   console.log(contentStateWithBlock)
+
+  // const entityKey = contentStateWithBlock.getLastCreatedEntityKey();
+  // const newEditorState = EditorState.create(contentStateWithBlock);
+  return EditorState.createWithContent(csn);
+};

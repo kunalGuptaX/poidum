@@ -25,6 +25,12 @@ import {
   TOOLBAR_DEFAULT_TOP,
 } from "./constants";
 import BlockFormattingToolbar from "./BlockFormattingToolbar";
+import {
+  Editable,
+  EditableInput,
+  EditablePreview,
+  EditableTextarea,
+} from "@chakra-ui/react";
 
 export interface EditorProps {
   placeholder?: string;
@@ -76,9 +82,9 @@ const Editor = ({
         editorContainerPosition
       ) {
         const combinedLeft =
-          documentSelectionPosition.left -
-          editorContainerPosition.left +
+          documentSelectionPosition.left +
           TOOLBAR_DEFAULT_LEFT;
+        
 
         setCursorPos({
           top: editorSelectionTopPosition + TOOLBAR_DEFAULT_TOP,
@@ -101,7 +107,7 @@ const Editor = ({
   return (
     <>
       <DraftEditor
-        placeholder={placeholder}
+        placeholder="Tell your story..."
         editorState={editorState || uncontrolledEditorState}
         onChange={handleEditorStateChange}
         blockRenderMap={blockRenderMap}
@@ -111,7 +117,7 @@ const Editor = ({
         }
         keyBindingFn={keyBindingsFn}
       />
-      {cursorPos? (
+      {cursorPos ? (
         <InlineFormattingToolbar
           editorRef={ref}
           left={cursorPos?.left}

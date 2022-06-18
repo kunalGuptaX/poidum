@@ -12,7 +12,7 @@ const StyledPrimaryButton = styled(ChakraButton)<{
   font-weight: 400;
   font-size: 13px;
   border-radius: 25px;
-  font-family: 'Noto Sans JP';
+  font-family: "Noto Sans JP";
   height: auto;
   :hover {
     background-color: #000;
@@ -25,7 +25,13 @@ const StyledPrimaryButton = styled(ChakraButton)<{
   ${({ size }) => {
     switch (size) {
       case "sm":
-        return css``;
+        return css`
+          padding: 0 8px;
+          font-size: 13px;
+          height: 25px;
+          line-height: 25px;
+          padding-bottom: 2px;
+        `;
       case "lg":
         return css`
           padding: 15px 24px;
@@ -52,7 +58,7 @@ const StyledSecondaryButton = styled(ChakraButton)<{
   font-weight: 400;
   font-size: 13px;
   border-radius: 25px;
-  font-family: 'Noto Sans JP';
+  font-family: "Noto Sans JP";
   :hover {
     border-color: #000;
     background-color: transparent;

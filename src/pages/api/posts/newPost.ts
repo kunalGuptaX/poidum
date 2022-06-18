@@ -11,8 +11,8 @@ const handler: NextApiHandler = async (
 
     const session = await getSession({ req });
 
-    if (!session || !title || !subTitle || !body) {
-      return res.status(400);
+    if (!session || !title || !body) {
+      return res.status(400).send({});
     }
 
     const resposne = await axios.post(
@@ -32,7 +32,7 @@ const handler: NextApiHandler = async (
     res.status(200).send(resposne.data);
   } catch (err) {
     console.log(err);
-    res.send(400);
+    res.status(400).send(err);
   }
 };
 

@@ -1,16 +1,23 @@
 import { Box, Flex, useMediaQuery } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 import AuthenticatedNavbarItems from "../components/Navbar/AuthenticatedNavbarItems";
+import IsolatedNavbar from "../components/Navbar/IsolatedNavbar";
 
 type Props = {
   middleContent: React.ReactNode;
 };
 
 const AuthenticatedLayout = ({ middleContent }: Props) => {
+  const router = useRouter();
   const [isSmallerThan1080] = useMediaQuery("(max-width: 1080px)", {
     ssr: true,
   });
+
+  if (router.asPath.includes("/new-post")) {
+    return <>{middleContent}</>;
+  }
   return (
     <div style={{ maxWidth: "1504px", margin: "auto", position: "relative" }}>
       <div
@@ -46,7 +53,12 @@ const AuthenticatedLayout = ({ middleContent }: Props) => {
             direction={isSmallerThan1080 ? "row" : "column"}
           />
         </Flex>
-        <Box {...(isSmallerThan1080 ? { marginTop: "56px" } : {})}>
+        <Box
+          {...(isSmallerThan1080 ? { marginTop: "56px" } : {})}
+          height="100vh"
+          overflow="auto"
+          width="100%"
+        >
           {middleContent}
         </Box>
         {isSmallerThan1080 ? (
