@@ -2,7 +2,7 @@ import { Box, Divider, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
-import { GoBold, GoItalic } from "react-icons/go";
+import { GoBold, GoCode, GoItalic } from "react-icons/go";
 import { MdFormatUnderlined } from "react-icons/md";
 import { BiText } from "react-icons/bi";
 
@@ -31,6 +31,7 @@ export const InlineFormattingToolbar = ({
   top,
   left,
   inlineStyleTypes,
+  blockType,
 }: Props) => {
   return (
     <Flex
@@ -96,6 +97,26 @@ export const InlineFormattingToolbar = ({
         orientation="vertical"
       />
       <StyledIconButton
+        aria-label="Code"
+        variant="ghost"
+        icon={<GoCode size={18} />}
+        borderRadius={0}
+        size="lg"
+        backgroundColor="transparent"
+        color="white"
+        isActive={inlineStyleTypes?.includes("CODE")}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          onToggle("CODE");
+          editorRef.current?.focus();
+        }}
+      />
+      <Divider
+        height="30px"
+        borderColor="rgba(255,255,255,.2)"
+        orientation="vertical"
+      />
+      <StyledIconButton
         aria-label="Search database"
         variant="ghost"
         icon={<BiText />}
@@ -103,10 +124,10 @@ export const InlineFormattingToolbar = ({
         size="lg"
         backgroundColor="transparent"
         color="white"
-        isActive={inlineStyleTypes?.includes("UNDERLINE")}
+        isActive={blockType === "header-large"}
         onMouseDown={(e) => {
           e.preventDefault();
-          onToggle("UNDERLINE");
+          onToggle("header-large");
           editorRef.current?.focus();
         }}
       />
@@ -118,10 +139,10 @@ export const InlineFormattingToolbar = ({
         size="lg"
         backgroundColor="transparent"
         color="white"
-        isActive={inlineStyleTypes?.includes("UNDERLINE")}
+        isActive={blockType === "header-small"}
         onMouseDown={(e) => {
           e.preventDefault();
-          onToggle("UNDERLINE");
+          onToggle("header-small");
           editorRef.current?.focus();
         }}
       />

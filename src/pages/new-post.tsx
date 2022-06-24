@@ -54,7 +54,6 @@ const Post = ({ session }: Props) => {
     },
     onSubmit: async (values) => {
       try {
-        console.log(editorValue);
         if (editorValue) {
           const res = await axios
             .post("/api/posts/newPost", {
@@ -76,6 +75,23 @@ const Post = ({ session }: Props) => {
       setUploadedBanner(acceptedFiles[0]);
     }
   }, [acceptedFiles]);
+
+  const titleInputRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleInputChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
+    e
+  ) => {
+    if (titleInputRef.current) {
+      titleInputRef.current.style.height = "initial";
+      titleInputRef.current.style.height =
+        titleInputRef.current.scrollHeight + "px";
+    }
+    if (e.target.value.length < 237) {
+      formik.handleChange(e);
+    } else {
+      e.preventDefault();
+    }
+  };
 
   return (
     <>
@@ -158,20 +174,34 @@ const Post = ({ session }: Props) => {
         </Box> */}
           <Box maxWidth="640px" margin="auto">
             <Editable placeholder="Title" marginBottom="20px">
-              <EditablePreview fontSize="34px" fontFamily="charter" />
-              <EditableInput
+              <EditablePreview
+                fontSize="42px"
+                fontFamily="charter"
+                color={formik.values.title ? "black" : "#b3b3b1"}
+                _placeholder={{ color: "#b3b3b1" }}
+                overflow="hidden"
+                width="100%"
+              />
+              <EditableTextarea
                 border="none"
                 _focusVisible={{
                   border: "none",
                 }}
                 paddingBottom="0"
                 marginBottom="3px"
-                fontSize="34px"
+                fontSize="42px"
                 fontFamily="charter"
                 autoFocus
                 id="title"
-                onChange={formik.handleChange}
+                rows={1}
+                resize="none"
+                overflow="hidden"
+                onChange={handleInputChange}
                 value={formik.values.title}
+                _placeholder={{
+                  color: "#b3b3b1",
+                }}
+                ref={titleInputRef}
               />
             </Editable>
             <Editor

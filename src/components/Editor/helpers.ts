@@ -1,4 +1,5 @@
 import {
+  AtomicBlockUtils,
   ContentBlock,
   DraftHandleValue,
   EditorState,
@@ -9,6 +10,7 @@ import {
 // @ts-ignore
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 import { List } from "immutable";
+import { getBase64 } from "../../lib/common/helpers/getBase64";
 
 export const DRAFT_EDITOR_CLASSNAME = "DraftEditor-root";
 
@@ -29,7 +31,7 @@ export const getEditorContainerPosition: () => DOMRect | null = () => {
     return (
       document
         .getElementsByClassName(DRAFT_EDITOR_CLASSNAME)?.[0]
-        .getBoundingClientRect() || null
+        ?.getBoundingClientRect() || null
     );
   }
   return null;
@@ -37,6 +39,18 @@ export const getEditorContainerPosition: () => DOMRect | null = () => {
 
 export const getEditorSelectionState = (editorState: EditorState) => {
   return editorState.getSelection();
+};
+
+export const getEditorSelectionOffsetKey = (editorState: EditorState) => {
+  if (typeof document !== "undefined") {
+    const selection = getEditorSelectionState(editorState);
+    const currentContent = editorState!.getCurrentContent();
+    const currentBlock = currentContent?.getBlockForKey(
+      selection.getStartKey()
+    );
+    const offsetKey = DraftOffsetKey?.encode(currentBlock.getKey(), 0, 0);
+    return offsetKey;
+  }
 };
 
 /**
@@ -48,12 +62,7 @@ export const getEditorSelectionNode: (
   editorState: EditorState
 ) => HTMLDivElement | null = (editorState: EditorState) => {
   if (typeof document !== "undefined") {
-    const selection = getEditorSelectionState(editorState);
-    const currentContent = editorState!.getCurrentContent();
-    const currentBlock = currentContent?.getBlockForKey(
-      selection.getStartKey()
-    );
-    const offsetKey = DraftOffsetKey?.encode(currentBlock.getKey(), 0, 0);
+    const offsetKey = getEditorSelectionOffsetKey(editorState);
     const node = document.querySelector<HTMLDivElement>(
       `[data-offset-key="${offsetKey}"]`
     );
@@ -142,7 +151,7 @@ export const createEmptyTitleBlock = (editorState: EditorState) => {
     type: "header-one",
     text: "",
     characterList: List(),
-    placeholder: "Title"
+    placeholder: "Title",
   });
   let editorContentState = editorState.getCurrentContent();
   let selectionState = editorState.getSelection();
@@ -193,7 +202,7 @@ export const createEmptyContentBlock = (editorState: EditorState) => {
     type: "unstyled",
     text: "",
     characterList: List(),
-    placeholder: "Tell your story"
+    placeholder: "Tell your story",
   });
   let editorContentState = editorState.getCurrentContent();
   let selectionState = editorState.getSelection();
@@ -236,4 +245,23 @@ export const createEmptyContentBlock = (editorState: EditorState) => {
   // const entityKey = contentStateWithBlock.getLastCreatedEntityKey();
   // const newEditorState = EditorState.create(contentStateWithBlock);
   return EditorState.createWithContent(csn);
+};
+
+export const insertImage = async (editorState: EditorState, file: File) => {
+  if (file) {
+    const base64Url = await getBase64(file);
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+      "IMAGE",
+      "IMMUTABLE",
+      { src: base64Url, height: 300, width: 300 }
+    );
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity,
+    });
+
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, " ");
+  }
+  return null;
 };

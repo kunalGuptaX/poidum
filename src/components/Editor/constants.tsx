@@ -4,21 +4,37 @@ import Immutable from "immutable";
 
 export const blockRenderMap: Draft.DraftComponent.Base.DraftBlockRenderMap =
   Immutable.Map({
-    "header-three": {
+    "header-large": {
       element: "h3",
-      wrapper: <Heading fontFamily="charter" variant="h3" />,
+      wrapper: (
+        <Heading
+          fontFamily="charter"
+          variant="h3"
+          fontSize={42}
+          fontWeight={400}
+          lineHeight={1.25}
+          letterSpacing={0}
+          color="rgba(0,0,0,.84)"
+        />
+      ),
     },
-    "header-two": {
-      element: "h2",
-      wrapper: <Heading fontFamily="charter" variant="h2" />,
-    },
-    "header-one": {
-      element: "h1",
-      wrapper: <Heading fontFamily="charter" variant="h1" />,
+    "header-small": {
+      element: "h4",
+      wrapper: (
+        <Heading
+          fontFamily="'Noto Sans JP', sans-serif"
+          variant="h4"
+          fontSize={26}
+          fontWeight={700}
+          lineHeight={1.22}
+          letterSpacing="-0.012em"
+          color="rgba(0,0,0,.84)"
+        />
+      ),
     },
     unstyled: {
       element: "p",
-      wrapper: <Text fontFamily="charter" fontSize="20px" />,
+      wrapper: <Text fontFamily="charter" fontSize="21px" color="rgba(0,0,0,.84)" />,
     },
   });
 

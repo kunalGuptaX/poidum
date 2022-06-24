@@ -18,6 +18,7 @@ const IsolatedNavbar = ({ session }: Props) => {
       width="100%"
       height="65px"
       backgroundColor="white"
+      zIndex={200}
     >
       <Flex
         maxWidth="1072px"
