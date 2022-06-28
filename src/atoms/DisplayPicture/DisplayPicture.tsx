@@ -31,10 +31,9 @@ export const DisplayPicture = ({
 
   const userName = useMemo(() => {
     if (!imageUrl) {
-      return name || `${data?.firstName} ${data?.lastName}`;
+      return name || (data && `${data?.firstName} ${data?.lastName}`);
     }
-    return null;
-  }, [imageUrl, data, name]);
+  }, [imageUrl, data, name, data]);
 
   if (!imageUrl && !userName) {
     return null;
