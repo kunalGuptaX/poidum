@@ -48,7 +48,11 @@ export const ArticleCard = ({
       >
         <Box pt="24px" maxW="692px">
           <Stack spacing={2} direction="row" alignItems="center">
-            <DisplayPicture overrideUrl={displayPicture} size="xs" />
+            <DisplayPicture
+              overrideUrl={displayPicture}
+              size="xs"
+              name={name}
+            />
             <Text size="sm">{name}</Text>
             <Text size="sm">·</Text>
             <Text size="sm" color="light">
@@ -80,15 +84,13 @@ export const ArticleCard = ({
                     fontSize="16px"
                     lineHeight="24px"
                     overflow="hidden"
-                    textLines={textLines}
                     style={{
-                      /** @ts-ignore */
-                      "-webkit-line-clamp": `${textLines}`,
-                      "-webkit-box-orient": "vertical",
+                      WebkitLineClamp: `${textLines}`,
+                      WebkitBoxOrient: "vertical",
                       display: "-webkit-box",
                     }}
                   >
-                    {body.substring(0 ,256)}
+                    {body.substring(0, 256)}
                   </Text>
                 </Box>
               </Box>

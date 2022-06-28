@@ -12,7 +12,7 @@ export const HorizontalLayout = ({ session, children }: Props) => {
   return (
     <>
       <Navbar session={session} />
-      <Box marginTop="75px">{children}</Box>
+      <Box marginTop="75px" padding="24px">{children}</Box>
     </>
   );
 };

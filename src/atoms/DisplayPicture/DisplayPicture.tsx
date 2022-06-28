@@ -15,6 +15,7 @@ export const DisplayPicture = ({
   size,
   overrideFile,
   overrideUrl,
+  name,
 }: DisplayPictureProps) => {
   const { data, status } = useSession();
 
@@ -28,19 +29,15 @@ export const DisplayPicture = ({
     }
   }, [data?.displayPicture, overrideUrl, overrideFile]);
 
-  const name = useMemo(() => {
+  const userName = useMemo(() => {
     if (!imageUrl) {
-      return `${data?.firstName} ${data?.lastName}`;
+      return name || `${data?.firstName} ${data?.lastName}`;
     }
-  }, [imageUrl, data]);
-
-  if (!overrideUrl && (status === "loading" || !data)) {
-    return null;
-  }
+  }, [imageUrl, data, name]);
 
   return (
     <WrapItem>
-      <ChakraAvatar size={size || "2xl"} src={imageUrl} name={name} />
+      <ChakraAvatar size={size || "2xl"} src={imageUrl} name={userName} />
     </WrapItem>
   );
 };

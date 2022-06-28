@@ -29,7 +29,7 @@ const UserPage = ({ session, user, posts }: Props) => {
             wordBreak="break-all"
             style={{
               /** @ts-ignore */
-              "-webkit-line-clamp": "1",
+              WebkitLineClamp: "1"
             }}
             textOverflow="ellipsis"
             overflow="hidden"
