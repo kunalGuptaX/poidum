@@ -75,6 +75,8 @@ const Navbar = ({ session }: Props) => {
       width="100%"
       padding="25px 0"
       boxShadow="0px 1px 0px rgba(0, 0, 0)"
+      backgroundColor="white"
+      zIndex={20}
     >
       <Flex
         alignItems="center"
