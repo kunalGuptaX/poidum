@@ -8,7 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { PrimaryButton } from "../../components/Button";
+import { PrimaryButton } from "../../atoms/Button";
 import { useAuth } from "./AuthProvider";
 import { IoChevronBackSharp } from "react-icons/io5";
 import { signIn } from "next-auth/react";

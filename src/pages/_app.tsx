@@ -2,16 +2,13 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { ChakraProvider, ChakraTheme, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { getSession, SessionProvider } from "next-auth/react";
-import { GetServerSidePropsContext } from "next";
 import App from "next/app";
-import Navbar from "../components/Navbar";
 import { Session } from "next-auth";
 import { theme } from "../styles/theme";
 import AuthProvider from "../lib/Authentication/AuthProvider";
 import Authentication from "../lib/Authentication/Authentication";
-import AuthenticatedLayout from "../layouts/AuthenticatedLayout";
 import { useRouter } from "next/router";
 
 function MyApp({
@@ -20,6 +17,7 @@ function MyApp({
   session,
 }: AppProps & { session: Session }) {
   const router = useRouter();
+  
   return (
     <>
       <Head>
@@ -30,16 +28,7 @@ function MyApp({
         <SessionProvider session={pageProps.session} refetchInterval={0}>
           <AuthProvider>
             <Authentication />
-            {session?.accessToken || router.asPath !== "/" ? (
-              <AuthenticatedLayout
-                middleContent={<Component {...pageProps} />}
-              ></AuthenticatedLayout>
-            ) : (
-              <>
-                <Navbar session={session} />
-                <Component {...pageProps} />
-              </>
-            )}
+            <Component {...pageProps} />
           </AuthProvider>
         </SessionProvider>
       </ChakraProvider>

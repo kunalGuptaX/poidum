@@ -6,12 +6,12 @@ import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { PrimaryButton, SecondaryButton } from "../components/Button";
+import { PrimaryButton, SecondaryButton } from "../atoms/Button";
 import DisplayPicture from "../components/DisplayPicture";
-import { LabeledInput } from "../components/Input/LabeledInput";
+import { LabeledInput } from "../atoms/Input/LabeledInput";
 import Router from "next/router";
 import { VALID_IMAGE_TYPES } from "../lib/constants";
-import { Heading } from "../components/Heading";
+import { Heading } from "../atoms/Heading";
 
 type Props = {
   session: Session;

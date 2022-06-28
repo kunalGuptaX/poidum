@@ -13,7 +13,8 @@ const ArticleCard = ({
   image,
   name,
   date,
-  id
+  id,
+  userId
 }: Props) => {
   const headerRef = useRef<HTMLHeadingElement>(null);
   const [textHeight, setTextHeight] = useState(112);
@@ -29,14 +30,13 @@ const ArticleCard = ({
   }, [headerRef]);
 
   return (
-    <Link href={`/article/${id}`}>
-      <Box paddingBottom="32px" cursor="pointer">
-        <Box
-          borderTop="1px solid rgba(230, 230, 230, 1)"
-          pt="24px"
-          maxW="692px"
-          margin="0 32px"
-        >
+    <Link href={`/p/${userId}/${id}`}>
+      <Box
+        paddingBottom="32px"
+        cursor="pointer"
+        borderBottom="1px solid rgba(230, 230, 230, 1)"
+      >
+        <Box pt="24px" maxW="692px">
           <Stack spacing={2} direction="row" alignItems="center">
             <DisplayPicture overrideUrl={displayPicture} size="xs" />
             <Text fontSize="14px" color="rgba(41, 41, 41, 1)">

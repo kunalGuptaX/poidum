@@ -114,8 +114,8 @@ export const nextAuthOptions = (
             ...(response.data?.currentUser || {}),
           };
         }
-        session.accessToken = token.accessToken;
-        session.accessTokenExpires = token.accessTokenExpires;
+        session.accessToken = token.accessToken as string;
+        session.accessTokenExpires = token.accessTokenExpires as Date;
         return session;
       },
     },

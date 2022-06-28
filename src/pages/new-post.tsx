@@ -18,7 +18,7 @@ import { VALID_IMAGE_TYPES } from "../lib/constants";
 import "draft-js/dist/Draft.css";
 import { useFormik } from "formik";
 import axios from "axios";
-import { PrimaryButton } from "../components/Button";
+import { PrimaryButton } from "../atoms/Button";
 import { dateRightNow } from "../lib/common/helpers/datetime";
 import Editor from "../components/Editor";
 import IsolatedNavbar from "../components/Navbar/IsolatedNavbar";

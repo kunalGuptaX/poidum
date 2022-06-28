@@ -3,8 +3,8 @@ import React from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { GrFacebook } from "react-icons/gr";
-import { SecondaryButton } from "../../components/Button";
-import Modal from "../../components/Modal";
+import { SecondaryButton } from "../../atoms/Button";
+import { Modal } from "../../atoms/Modal";
 import { useAuth } from "./AuthProvider";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 
 const Signup = () => {
   const { openSignInModal, openEmailSignUp } = useAuth();
-  
+
   return (
     <>
       <Stack spacing={3} width="fit-content" margin="0 auto" marginTop="50px">

@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdMoreHoriz } from "react-icons/md";
-import { PrimaryButton } from "../Button";
+import { PrimaryButton } from "../../atoms/Button";
 import DisplayPicture, { DisplayPicturePopover } from "../DisplayPicture";
 
 type Props = {};

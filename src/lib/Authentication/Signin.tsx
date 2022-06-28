@@ -7,8 +7,7 @@ import {
   import { AiOutlineMail } from "react-icons/ai";
   import { FcGoogle } from "react-icons/fc";
   import { GrFacebook } from "react-icons/gr";
-  import { SecondaryButton } from "../../components/Button";
-  import Modal from "../../components/Modal";
+  import { SecondaryButton } from "../../atoms/Button";
 import { useAuth } from "./AuthProvider";
 
   

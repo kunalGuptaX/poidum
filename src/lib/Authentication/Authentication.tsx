@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import Modal from "../../components/Modal";
+import { Modal } from "../../atoms/Modal";
 import { useAuth } from "./AuthProvider";
 import Signin from "./Signin";
 import SigninWithEmail from "./SignInWithEmail";

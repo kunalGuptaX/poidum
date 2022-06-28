@@ -2,12 +2,12 @@ import { Box, Button, chakra, Stack } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { PrimaryButton } from "../components/Button";
+import { PrimaryButton } from "../atoms/Button";
 import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
-import { LabeledInput } from "../components/Input/LabeledInput";
-import { Heading } from "../components/Heading";
+import { LabeledInput } from "../atoms/Input/LabeledInput";
+import { Heading } from "../atoms/Heading";
 import Authentication from "../lib/Authentication/Authentication";
 import { useAuth } from "../lib/Authentication/AuthProvider";
 

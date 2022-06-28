@@ -20,15 +20,10 @@ import { useMediaQuery } from "@chakra-ui/react";
 
 import DisplayPicture from "../DisplayPicture";
 import { Session } from "next-auth";
-import { PrimaryButton, SecondaryButton } from "../Button";
+import { PrimaryButton, SecondaryButton } from "../../atoms/Button";
 import Image from "next/image";
 import { TbEdit } from "react-icons/tb";
 import Link from "next/link";
-import Modal from "../Modal";
-import { FcGoogle } from "react-icons/fc";
-import { AiOutlineMail } from "react-icons/ai";
-import Signup from "../../lib/Authentication/Signup";
-import Signin from "../../lib/Authentication/Signin";
 import { useAuth } from "../../lib/Authentication/AuthProvider";
 type Props = {
   session: Session;

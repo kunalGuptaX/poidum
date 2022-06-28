@@ -6,7 +6,7 @@ import { BiEdit } from "react-icons/bi";
 import { IoBookmarksOutline } from "react-icons/io5";
 import { MdOutlineArticle } from "react-icons/md";
 import { RiNotificationLine } from "react-icons/ri";
-import DisplayPicture from "../DisplayPicture";
+import DisplayPicture from "../../components/DisplayPicture";
 
 type Props = {
   direction?: "row" | "column";
