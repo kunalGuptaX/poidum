@@ -12,12 +12,14 @@ import { theme } from "../styles/theme";
 import AuthProvider from "../lib/Authentication/AuthProvider";
 import Authentication from "../lib/Authentication/Authentication";
 import AuthenticatedLayout from "../layouts/AuthenticatedLayout";
+import { useRouter } from "next/router";
 
 function MyApp({
   Component,
   pageProps,
   session,
 }: AppProps & { session: Session }) {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -28,7 +30,7 @@ function MyApp({
         <SessionProvider session={pageProps.session} refetchInterval={0}>
           <AuthProvider>
             <Authentication />
-            {session?.accessToken ? (
+            {session?.accessToken || router.asPath !== "/" ? (
               <AuthenticatedLayout
                 middleContent={<Component {...pageProps} />}
               ></AuthenticatedLayout>

@@ -172,7 +172,7 @@ const Post = ({ session }: Props) => {
             borderWidth="2px"
           />
         </Box> */}
-          <Box maxWidth="640px" margin="auto">
+          <Box maxWidth="640px" margin="auto" marginTop="24px">
             <Editable placeholder="Title" marginBottom="20px">
               <EditablePreview
                 fontSize="42px"
@@ -181,6 +181,7 @@ const Post = ({ session }: Props) => {
                 _placeholder={{ color: "#b3b3b1" }}
                 overflow="hidden"
                 width="100%"
+                lineHeight={1.25}
               />
               <EditableTextarea
                 border="none"
@@ -195,6 +196,7 @@ const Post = ({ session }: Props) => {
                 id="title"
                 rows={1}
                 resize="none"
+                lineHeight={1.25}
                 overflow="hidden"
                 onChange={handleInputChange}
                 value={formik.values.title}

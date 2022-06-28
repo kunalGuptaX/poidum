@@ -31,7 +31,7 @@ const handler: NextApiHandler = async (
     );
     res.status(200).send(resposne.data);
   } catch (err) {
-    console.log(err);
+    console.log(err, 'to');
     res.status(400).send(err);
   }
 };

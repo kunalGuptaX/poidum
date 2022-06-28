@@ -54,6 +54,7 @@ export interface EditorProps {
     value?: Draft.DraftModel.Encoding.RawDraftContentState
   ) => void;
   editorState?: EditorState;
+  readOnly?: boolean;
 }
 
 const EditorContext = createContext<{
@@ -71,6 +72,7 @@ const Editor = ({
   onChange,
   value,
   editorState: controlledEditorState,
+  readOnly,
 }: EditorProps) => {
   const [cursorPos, setCursorPos] = useState<any>(DEFAULT_CURSOR_POSITION);
   const [uncontrolledEditorState, setUncontrolledEditorState] = useState(() =>
@@ -110,7 +112,9 @@ const Editor = ({
         editorContainerPosition
       ) {
         const combinedLeft =
-          documentSelectionPosition.left + TOOLBAR_DEFAULT_LEFT - editorContainerPosition.left;
+          documentSelectionPosition.left +
+          TOOLBAR_DEFAULT_LEFT -
+          editorContainerPosition.left;
         setCursorPos({
           top: (editorSelectionTopPosition || 0) - 50,
           left: combinedLeft > 0 - TOOLBAR_DEFAULT_LEFT ? combinedLeft : 0,
@@ -159,6 +163,7 @@ const Editor = ({
           placeholder="Tell your story..."
           editorState={editorState || uncontrolledEditorState}
           onChange={handleEditorStateChange}
+          readOnly={readOnly}
           blockRenderMap={blockRenderMap}
           ref={ref}
           handleKeyCommand={(command, state) =>
@@ -184,7 +189,7 @@ const Editor = ({
             }
           }}
         />
-        {cursorPos ? (
+        {cursorPos && !readOnly ? (
           <InlineFormattingToolbar
             editorRef={ref}
             left={cursorPos?.left}
@@ -194,7 +199,7 @@ const Editor = ({
             blockType={blockType}
           />
         ) : null}
-        <BlockFormattingToolbar top={entityToolbarTopPos} />
+        {!readOnly && <BlockFormattingToolbar top={entityToolbarTopPos} />}
         {/* {cursorPos.top ? <BlockFormattingToolbar top={cursorPos.top} /> : null} */}
       </EditorContext.Provider>
     </Box>
