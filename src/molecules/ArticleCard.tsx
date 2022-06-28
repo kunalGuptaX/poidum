@@ -88,7 +88,7 @@ export const ArticleCard = ({
                       display: "-webkit-box",
                     }}
                   >
-                    {body}
+                    {body.substring(0 ,256)}
                   </Text>
                 </Box>
               </Box>

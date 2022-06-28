@@ -82,7 +82,11 @@ const Navbar = ({ session }: Props) => {
         maxWidth="1192px"
         margin={isSmallerThan728 ? "0 24px" : "auto"}
       >
-        <Logo alt="Podium" />
+        <Link href="/">
+          <Flex alignItems="center" fontFamily="Spectral" fontSize={64} cursor="pointer">
+            <Image src="/images/PodiumLogo.svg" width="160" height={24.57} />
+          </Flex>
+        </Link>
         <Box height="25px">
           <Flex height="100%" alignItems="center">
             {!isSmallerThan728 ? (

@@ -11,7 +11,7 @@ const MobileVerticalLayout = ({ middleContent }: Props) => {
   return (
     <div style={{ maxWidth: "1504px", margin: "auto", position: "relative" }}>
       <MobileTopNav />
-      <Box marginTop="56px" height="100vh" overflow="auto" width="100%">
+      <Box marginTop="56px" marginBottom="56px" height="100vh" overflow="auto" width="100%" padding="24px">
         {middleContent}
       </Box>
       <MobileNavbarItems />
