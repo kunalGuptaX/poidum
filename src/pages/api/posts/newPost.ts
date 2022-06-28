@@ -36,4 +36,13 @@ const handler: NextApiHandler = async (
   }
 };
 
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '50mb', // Set desired value here
+          externalResolver: true,
+      }
+  }
+}
+
 export default handler;

@@ -3,7 +3,6 @@ import {
   Button,
   chakra,
   Flex,
-  Heading,
   IconButton,
   Menu,
   MenuButton,
@@ -13,18 +12,17 @@ import {
 } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { MdAccountCircle, MdArticle, MdLogout } from "react-icons/md";
-import { GrFacebook, GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
 import { Session } from "next-auth";
-import { PrimaryButton, SecondaryButton } from "../atoms/Button";
+import { PrimaryButton } from "../atoms/Button";
 import Image from "next/image";
 import { TbEdit } from "react-icons/tb";
 import Link from "next/link";
 import { useAuth } from "../lib/Authentication/AuthProvider";
-import { DisplayPicture } from "../atoms";
+import { DisplayPicture, Logo } from "../atoms";
 type Props = {
   session: Session;
 };
@@ -84,9 +82,7 @@ const Navbar = ({ session }: Props) => {
         maxWidth="1192px"
         margin={isSmallerThan728 ? "0 24px" : "auto"}
       >
-        <Flex alignItems="center" fontFamily="Spectral" fontSize={64}>
-          <Image src="/images/PodiumLogo.svg" width="160" height={24.57} />
-        </Flex>
+        <Logo alt="Podium" />
         <Box height="25px">
           <Flex height="100%" alignItems="center">
             {!isSmallerThan728 ? (

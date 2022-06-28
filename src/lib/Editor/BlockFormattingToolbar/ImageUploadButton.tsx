@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { BsCamera } from "react-icons/bs";
 import { IoCameraOutline } from "react-icons/io5";
-import { getBase64 } from "../../../helpers/getBase64";
 import { VALID_IMAGE_TYPES } from "../../constants";
 import { useEditor } from "../Editor";
 import { insertImage } from "../helpers";
