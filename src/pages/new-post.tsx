@@ -1,11 +1,9 @@
 import {
   Box,
-  Divider,
   Editable,
-  EditableInput,
   EditablePreview,
   EditableTextarea,
-  Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
@@ -17,10 +15,9 @@ import { VALID_IMAGE_TYPES } from "../lib/constants";
 import "draft-js/dist/Draft.css";
 import { useFormik } from "formik";
 import axios from "axios";
-import { PrimaryButton } from "../atoms/Button";
-import { dateRightNow } from "../helpers/datetime";
 import Editor from "../lib/Editor";
 import IsolatedNavbar from "../oragnisms/IsolatedNavbar";
+import { useRouter } from "next/router";
 
 type Props = {
   session: Session;
@@ -35,6 +32,13 @@ const StyledEditable = styled(Editable)`
 `;
 
 const Post = ({ session }: Props) => {
+  const router = useRouter();
+  const toast = useToast({
+    containerStyle: {
+      borderRadius: 0,
+      backgroundColor: "#4baf48",
+    },
+  });
   const [uploadedBanner, setUploadedBanner] = useState<File>();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: { "image/png": VALID_IMAGE_TYPES },
@@ -54,14 +58,20 @@ const Post = ({ session }: Props) => {
     onSubmit: async (values) => {
       try {
         if (editorValue) {
-          const res = await axios
-            .post("/api/posts/newPost", {
-              title: values.title,
-              subTitle: values.subTitle || "test subtitle",
-              body: JSON.stringify(editorValue),
-            })
-            .catch((er) => console.log(er));
-          console.log(res);
+          const res = await axios.post("/api/posts/newPost", {
+            title: values.title,
+            subTitle: values.subTitle || "test subtitle",
+            body: JSON.stringify(editorValue),
+          });
+          console.log(res.data);
+          if (res.status === 200) {
+            toast({
+              status: "success",
+              title: "Post published",
+              duration: 5000,
+            });
+            router.push("/p/" + res.data.user + "/" + res.data.id);
+          }
         }
       } catch (er) {
         console.log(er);
@@ -95,7 +105,13 @@ const Post = ({ session }: Props) => {
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
-        <IsolatedNavbar session={session} />
+        <IsolatedNavbar
+          publishDisabled={
+            formik.values.title?.length < 5 ||
+            JSON.stringify(editorValue)?.length < 200
+          }
+          session={session}
+        />
         <Box marginTop="62px" paddingTop="8px">
           {/* <Box maxWidth="858px" width="100%" margin="auto">
           <StyledEditable

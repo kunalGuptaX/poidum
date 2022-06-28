@@ -10,9 +10,10 @@ import { Session } from "next-auth";
 
 interface Props {
   session: Session;
+  publishDisabled: boolean
 }
 
-const IsolatedNavbar = ({ session }: Props) => {
+const IsolatedNavbar = ({ session,publishDisabled }: Props) => {
   return (
     <Box
       position="fixed"
@@ -44,6 +45,7 @@ const IsolatedNavbar = ({ session }: Props) => {
             style={{ backgroundColor: "#1a8917", border: "1px solid #1a8917" }}
             size="sm"
             type="submit"
+            disabled={publishDisabled}
           >
             Publish
           </PrimaryButton>
