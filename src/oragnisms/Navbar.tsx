@@ -123,7 +123,7 @@ const Navbar = ({ session }: Props) => {
                 <Menu>
                   <MenuButton as={Button} variant="link">
                     <Box>
-                      <DisplayPicture size="md" />
+                      <DisplayPicture size="md" isUserPicture />
                     </Box>
                   </MenuButton>
                   <MenuList>

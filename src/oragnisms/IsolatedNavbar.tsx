@@ -67,7 +67,7 @@ const IsolatedNavbar = ({ session }: Props) => {
             />
           </Stack>
           <Box>
-            <DisplayPicturePopover size="sm">
+            <DisplayPicturePopover size="sm" isUserPicture>
               <ProfileMenu
                 userName={`${session.firstName} ${session.lastName}`}
               />

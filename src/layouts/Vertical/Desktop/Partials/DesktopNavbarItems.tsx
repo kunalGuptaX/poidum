@@ -76,7 +76,7 @@ const DesktopNavbarItems = () => {
         </>
       </Stack>
       <Box padding="30px">
-        <DisplayPicture size="sm" />
+        <DisplayPicture size="sm" isUserPicture />
       </Box>
     </Flex>
   );

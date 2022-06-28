@@ -56,7 +56,7 @@ const MobileNavbarItems = () => {
           {...commonStyles}
         />
         <Box justifyContent="center" {...commonStyles}>
-          <DisplayPicture size="sm" />
+          <DisplayPicture size="sm" isUserPicture />
         </Box>
       </Stack>
     </Flex>

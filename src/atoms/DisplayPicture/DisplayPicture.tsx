@@ -9,6 +9,7 @@ import { useMemo } from "react";
 export interface DisplayPictureProps extends AvatarProps {
   overrideFile?: File;
   overrideUrl?: string;
+  isUserPicture?: boolean;
 }
 
 export const DisplayPicture = ({
@@ -16,6 +17,7 @@ export const DisplayPicture = ({
   overrideFile,
   overrideUrl,
   name,
+  isUserPicture,
 }: DisplayPictureProps) => {
   const { data, status } = useSession();
 
@@ -24,16 +26,19 @@ export const DisplayPicture = ({
       return overrideUrl;
     } else if (overrideFile) {
       return URL.createObjectURL(overrideFile);
-    } else {
+    } else if (isUserPicture) {
       return data?.displayPicture;
     }
-  }, [data?.displayPicture, overrideUrl, overrideFile]);
+  }, [data?.displayPicture, overrideUrl, overrideFile, isUserPicture]);
 
   const userName = useMemo(() => {
     if (!imageUrl) {
-      return name || (data && `${data?.firstName} ${data?.lastName}`);
+      return (
+        name ||
+        (data && isUserPicture && `${data?.firstName} ${data?.lastName}`)
+      );
     }
-  }, [imageUrl, data, name, data]);
+  }, [imageUrl, data, name, data, isUserPicture]);
 
   if (!imageUrl && !userName) {
     return null;
@@ -41,7 +46,7 @@ export const DisplayPicture = ({
 
   return (
     <WrapItem>
-      <ChakraAvatar size={size || "2xl"} src={imageUrl} name={userName} />
+      <ChakraAvatar size={size || "2xl"} src={imageUrl} name={userName || ""} />
     </WrapItem>
   );
 };
