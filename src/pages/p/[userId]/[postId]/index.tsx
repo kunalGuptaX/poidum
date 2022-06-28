@@ -37,6 +37,7 @@ const Post = ({ post }: Props) => {
               <DisplayPicture
                 overrideUrl={post.user.displayPicture}
                 size="md"
+                name={`${post.user.firstName} ${post.user.lastName}`}
               />
             </Box>
             <Stack spacing={1}>

@@ -33,7 +33,12 @@ export const DisplayPicture = ({
     if (!imageUrl) {
       return name || `${data?.firstName} ${data?.lastName}`;
     }
+    return null;
   }, [imageUrl, data, name]);
+
+  if (!imageUrl && !userName) {
+    return null;
+  }
 
   return (
     <WrapItem>
