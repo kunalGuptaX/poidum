@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import React from "react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../oragnisms";
 
 type Props = {
   session: Session;

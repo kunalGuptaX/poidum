@@ -6,7 +6,7 @@ import React from "react";
 import { getSessionOnServer } from "../../../helpers/serverTools";
 import { VerticalLayout } from "../../../layouts/Vertical";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import ArticleCard from "../../../components/ArticleCard";
+import {ArticleCard} from "../../../molecules/ArticleCard";
 import { convertFromRaw } from "draft-js";
 
 type Props = {

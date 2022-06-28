@@ -8,7 +8,7 @@ type Props = {
   alt: string;
 };
 
-const Logo = ({ width, height, alt }: Props) => {
+export const Logo = ({ width, height, alt }: Props) => {
   return (
     <Box padding="40px 0">
       <Image
@@ -21,4 +21,3 @@ const Logo = ({ width, height, alt }: Props) => {
   );
 };
 
-export default Logo;

@@ -13,15 +13,14 @@ import { getSession } from "next-auth/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
-import DisplayPicture from "../components/DisplayPicture";
 import { VALID_IMAGE_TYPES } from "../lib/constants";
 import "draft-js/dist/Draft.css";
 import { useFormik } from "formik";
 import axios from "axios";
 import { PrimaryButton } from "../atoms/Button";
-import { dateRightNow } from "../lib/common/helpers/datetime";
-import Editor from "../components/Editor";
-import IsolatedNavbar from "../components/Navbar/IsolatedNavbar";
+import { dateRightNow } from "../helpers/datetime";
+import Editor from "../lib/Editor";
+import IsolatedNavbar from "../oragnisms/IsolatedNavbar";
 
 type Props = {
   session: Session;
@@ -216,7 +215,6 @@ const Post = ({ session }: Props) => {
             />
             {/* <Flex alignItems="center">
             <Box marginRight="16px">
-              <DisplayPicture size="md" />
             </Box>
             <Box>
               <Box

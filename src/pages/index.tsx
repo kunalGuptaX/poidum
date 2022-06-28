@@ -3,7 +3,7 @@ import axios from "axios";
 import { convertFromRaw, convertToRaw } from "draft-js";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
-import ArticleCard from "../components/ArticleCard";
+import {ArticleCard} from "../molecules/ArticleCard";
 import { HorizontalLayout } from "../layouts/Horizontal";
 import { VerticalLayout } from "../layouts/Vertical";
 

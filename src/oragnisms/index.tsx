@@ -18,13 +18,13 @@ import { MdAccountCircle, MdArticle, MdLogout } from "react-icons/md";
 import { GrFacebook, GrMenu } from "react-icons/gr";
 import { useMediaQuery } from "@chakra-ui/react";
 
-import DisplayPicture from "../DisplayPicture";
 import { Session } from "next-auth";
-import { PrimaryButton, SecondaryButton } from "../../atoms/Button";
+import { PrimaryButton, SecondaryButton } from "../atoms/Button";
 import Image from "next/image";
 import { TbEdit } from "react-icons/tb";
 import Link from "next/link";
-import { useAuth } from "../../lib/Authentication/AuthProvider";
+import { useAuth } from "../lib/Authentication/AuthProvider";
+import { DisplayPicture } from "../atoms";
 type Props = {
   session: Session;
 };

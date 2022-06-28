@@ -3,7 +3,7 @@ import { AtomicBlockUtils, EditorState } from "draft-js";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlineMore } from "react-icons/ai";
-import { VALID_IMAGE_TYPES } from "../../../lib/constants";
+import { VALID_IMAGE_TYPES } from "../../constants";
 import { TOOLBAR_DEFAULT_LEFT, TOOLBAR_DEFAULT_TOP } from "../constants";
 import { useEditor } from "../Editor";
 import { getEditorContainerPosition } from "../helpers";

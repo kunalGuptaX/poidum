@@ -3,7 +3,7 @@ import React from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoBookmarksOutline } from "react-icons/io5";
 import { RiNotificationLine } from "react-icons/ri";
-import DisplayPicture from "../../../../components/DisplayPicture";
+import { DisplayPicture } from "../../../../atoms";
 
 const MobileNavbarItems = () => {
   const commonStyles = {

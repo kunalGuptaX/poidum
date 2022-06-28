@@ -7,11 +7,11 @@ import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { PrimaryButton, SecondaryButton } from "../atoms/Button";
-import DisplayPicture from "../components/DisplayPicture";
 import { LabeledInput } from "../atoms/Input/LabeledInput";
 import Router from "next/router";
 import { VALID_IMAGE_TYPES } from "../lib/constants";
 import { Heading } from "../atoms/Heading";
+import { DisplayPicture } from "../atoms";
 
 type Props = {
   session: Session;

@@ -10,7 +10,7 @@ import {
 // @ts-ignore
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 import { List } from "immutable";
-import { getBase64 } from "../../lib/common/helpers/getBase64";
+import { getBase64 } from "../../helpers/getBase64";
 
 export const DRAFT_EDITOR_CLASSNAME = "DraftEditor-root";
 

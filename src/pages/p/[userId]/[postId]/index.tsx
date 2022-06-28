@@ -4,11 +4,11 @@ import React from "react";
 import styled from "styled-components";
 import "draft-js/dist/Draft.css";
 import axios from "axios";
-import { dateRightNow } from "../../../../lib/common/helpers/datetime";
-import DisplayPicture from "../../../../components/DisplayPicture";
+import { dateRightNow } from "../../../../helpers/datetime";
 import { convertFromRaw, EditorState } from "draft-js";
-import Editor from "../../../../components/Editor";
+import Editor from "../../../../lib/Editor";
 import { VerticalLayout } from "../../../../layouts/Vertical";
+import { DisplayPicture } from "../../../../atoms";
 
 type Props = {
   post: any;

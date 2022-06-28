@@ -1,12 +1,23 @@
-import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Heading, Stack } from "@chakra-ui/react";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { dateRightNow } from "../../lib/common/helpers/datetime";
-import DisplayPicture from "../DisplayPicture";
+import React, { useEffect, useRef, useState } from "react";
+import { DisplayPicture, Text } from "../atoms";
+import { dateRightNow } from "../helpers/datetime";
+import { getPostUrl } from "../helpers/getPostUrl";
 
-type Props = {};
+export interface ArticleCardProps {
+  displayPicture: string;
+  title: string;
+  body: string;
+  image: string;
+  name: string;
+  date: Date;
+  id: string;
+  userId: string;
+}
 
-const ArticleCard = ({
+export const ArticleCard = ({
   displayPicture,
   title,
   body,
@@ -14,12 +25,11 @@ const ArticleCard = ({
   name,
   date,
   id,
-  userId
-}: Props) => {
+  userId,
+}: ArticleCardProps) => {
   const headerRef = useRef<HTMLHeadingElement>(null);
   const [textHeight, setTextHeight] = useState(112);
   const [textLines, setTextLines] = useState(2);
-  const headerHeight = headerRef.current?.offsetHeight;
 
   useEffect(() => {
     if (headerRef.current?.offsetHeight) {
@@ -30,7 +40,7 @@ const ArticleCard = ({
   }, [headerRef]);
 
   return (
-    <Link href={`/p/${userId}/${id}`}>
+    <Link href={getPostUrl(userId, id)}>
       <Box
         paddingBottom="32px"
         cursor="pointer"
@@ -39,11 +49,9 @@ const ArticleCard = ({
         <Box pt="24px" maxW="692px">
           <Stack spacing={2} direction="row" alignItems="center">
             <DisplayPicture overrideUrl={displayPicture} size="xs" />
-            <Text fontSize="14px" color="rgba(41, 41, 41, 1)">
-              {name}
-            </Text>
-            <Text>·</Text>
-            <Text color="rgba(117, 117, 117, 1)" fontSize="14px">
+            <Text size="sm">{name}</Text>
+            <Text size="sm">·</Text>
+            <Text size="sm" color="light">
               {dateRightNow(date)}
             </Text>
           </Stack>
@@ -72,8 +80,9 @@ const ArticleCard = ({
                     fontSize="16px"
                     lineHeight="24px"
                     overflow="hidden"
-                    color="rgba(41, 41, 41, 1)"
+                    textLines={textLines}
                     style={{
+                      /** @ts-ignore */
                       "-webkit-line-clamp": `${textLines}`,
                       "-webkit-box-orient": "vertical",
                       display: "-webkit-box",
@@ -84,13 +93,11 @@ const ArticleCard = ({
                 </Box>
               </Box>
               <Box width="142px">
-                <img
+                <Image
                   src={image || "/images/1_N7JuOgdQKlwdGL8qG9rEUw.png"}
                   alt="img"
-                  style={{
-                    height: "112px",
-                    width: "auto",
-                  }}
+                  height="112px"
+                  width="112px"
                 />
               </Box>
             </Stack>
@@ -100,5 +107,3 @@ const ArticleCard = ({
     </Link>
   );
 };
-
-export default ArticleCard;
