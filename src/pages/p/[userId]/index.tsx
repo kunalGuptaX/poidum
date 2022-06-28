@@ -11,6 +11,8 @@ import { convertFromRaw } from "draft-js";
 
 type Props = {
   session: Session;
+  user: any;
+  posts: any;
 };
 
 const UserPage = ({ session, user, posts }: Props) => {
@@ -26,6 +28,7 @@ const UserPage = ({ session, user, posts }: Props) => {
             color="rgba(25, 25, 25, 1)"
             wordBreak="break-all"
             style={{
+              /** @ts-ignore */
               "-webkit-line-clamp": "1",
             }}
             textOverflow="ellipsis"
@@ -63,7 +66,7 @@ const UserPage = ({ session, user, posts }: Props) => {
                         name={`${post.user.firstName} ${post.user.lastName}`}
                         title={post.title}
                         body={bodyText}
-                        data={new Date(post.createdAt)}
+                        date={new Date(post.createdAt)}
                         id={post.id}
                         userId={post.user.id}
                       />

@@ -3,11 +3,17 @@ import axios from "axios";
 import { convertFromRaw, convertToRaw } from "draft-js";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { getSession, useSession } from "next-auth/react";
-import {ArticleCard} from "../molecules/ArticleCard";
+import { ArticleCard } from "../molecules/ArticleCard";
 import { HorizontalLayout } from "../layouts/Horizontal";
 import { VerticalLayout } from "../layouts/Vertical";
+import { Session } from "next-auth";
 
-const Home: NextPage = ({ posts, session }) => {
+interface Props {
+  posts: any;
+  session: Session;
+}
+
+const Home = ({ posts, session }: Props) => {
   const Layout: any = session?.accessToken ? VerticalLayout : HorizontalLayout;
   return (
     <Layout>
@@ -22,8 +28,9 @@ const Home: NextPage = ({ posts, session }) => {
               name={`${post.user.firstName} ${post.user.lastName}`}
               title={post.title}
               body={bodyText}
-              data={new Date(post.createdAt)}
+              date={new Date(post.createdAt)}
               id={post.id}
+              userId={post.user.id}
             />
           </Box>
         );

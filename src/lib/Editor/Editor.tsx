@@ -4,8 +4,6 @@ import {
   Editor as DraftEditor,
   convertToRaw,
   RichUtils,
-  getVisibleSelectionRect,
-  DraftModel,
 } from "draft-js";
 import React, {
   createContext,
@@ -20,7 +18,6 @@ import {
   getDocumentSelectionPosition,
   getEditorContainerPosition,
   getEditorSelectionNode,
-  getEditorSelectionOffsetKey,
   getEditorSelectionTopPosition,
   getInlineStyleTypes,
   handleKeyCommands,
@@ -34,16 +31,9 @@ import {
   DEFAULT_CURSOR_POSITION,
   emptyContentState,
   TOOLBAR_DEFAULT_LEFT,
-  TOOLBAR_DEFAULT_TOP,
 } from "./constants";
 import BlockFormattingToolbar from "./BlockFormattingToolbar";
-import {
-  Box,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  EditableTextarea,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 
 export interface EditorProps {
@@ -160,7 +150,7 @@ const Editor = ({
         }}
       >
         <DraftEditor
-          placeholder="Tell your story..."
+          placeholder={placeholder || "Tell your story..."}
           editorState={editorState || uncontrolledEditorState}
           onChange={handleEditorStateChange}
           readOnly={readOnly}
@@ -169,8 +159,9 @@ const Editor = ({
           handleKeyCommand={(command, state) =>
             handleKeyCommands(command, state, handleEditorStateChange)
           }
+          /** @ts-ignore */
           handlePastedFiles={async (file) => {
-            console.log(file);
+            /** @ts-ignore */
             const newState = await insertImage(editorState, file[0]);
             if (newState) {
               handleEditorStateChange(newState);
@@ -200,7 +191,6 @@ const Editor = ({
           />
         ) : null}
         {!readOnly && <BlockFormattingToolbar top={entityToolbarTopPos} />}
-        {/* {cursorPos.top ? <BlockFormattingToolbar top={cursorPos.top} /> : null} */}
       </EditorContext.Provider>
     </Box>
   );

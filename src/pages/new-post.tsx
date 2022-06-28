@@ -208,7 +208,6 @@ const Post = ({ session }: Props) => {
             <Editor
               /**@ts-ignore */
               placeholder="Start typing here..."
-              id="body"
               /**@ts-ignore */
               onChange={(e, value) => setEditorValue(value)}
               value={editorValue}

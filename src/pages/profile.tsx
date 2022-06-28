@@ -107,7 +107,7 @@ const Profile = ({ session }: Props) => {
                   {...getRootProps({ className: "dropzone" })}
                 >
                   <input {...getInputProps()} />
-                  <DisplayPicture size="2xl" override={uploadedImage as File} />
+                  <DisplayPicture size="2xl" overrideFile={uploadedImage as File} />
                 </Box>
                 <PrimaryButton disabled={!uploadedImage} type="submit">
                   Update

@@ -12,6 +12,7 @@ type Props = {
   inlineStyleTypes?: string[];
   top: number;
   left: number;
+  blockType: string;
 };
 
 const StyledIconButton = styled(IconButton)`

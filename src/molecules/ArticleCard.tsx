@@ -10,7 +10,7 @@ export interface ArticleCardProps {
   displayPicture: string;
   title: string;
   body: string;
-  image: string;
+  image?: string;
   name: string;
   date: Date;
   id: string;
